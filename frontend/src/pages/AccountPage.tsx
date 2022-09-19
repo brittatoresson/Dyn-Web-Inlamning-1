@@ -1,9 +1,12 @@
 import React from "react";
+import Login from "../components/Login";
+import SignUp from "../components/SignUp";
 
 function AccountPage() {
     return (
         <div>
-            <h1>Log In / Register</h1>
+            <SignUp />
+            <Login />
         </div>
     );
 }

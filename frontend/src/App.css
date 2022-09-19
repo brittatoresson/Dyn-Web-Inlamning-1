@@ -2,10 +2,18 @@
     text-align: center;
 }
 
+.main-navigation {
+    background-color: burlywood;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+}
+
 .main-navigation ul {
     display: flex;
     list-style-type: none;
     margin: 0;
-    padding: 1em;
+    padding: 0;
     gap: 1em;
 }
