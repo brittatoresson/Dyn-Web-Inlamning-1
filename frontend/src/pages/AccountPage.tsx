@@ -1,7 +1,11 @@
 import React from "react";
 
 function AccountPage() {
-    return <h1>Log In / Register</h1>;
+    return (
+        <div>
+            <h1>Log In / Register</h1>
+        </div>
+    );
 }
 
 export default AccountPage;
