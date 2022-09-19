@@ -7,18 +7,18 @@ import ProfilePage from "./pages/ProfilePage";
 import StartPage from "./pages/StartPage";
 
 function App() {
-  return (
-    <Router>
-      <div className="App">
-        <Header />
-        <Routes>
-          <Route path="/" element={<StartPage />} />
-          <Route path="/account" element={<AccountPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-        </Routes>
-      </div>
-    </Router>
-  );
+    return (
+        <Router>
+            <div className="App">
+                <Header />
+                <Routes>
+                    <Route path="/" element={<StartPage />} />
+                    <Route path="/account" element={<AccountPage />} />
+                    <Route path="/profile" element={<ProfilePage />} />
+                </Routes>
+            </div>
+        </Router>
+    );
 }
 
 export default App;
