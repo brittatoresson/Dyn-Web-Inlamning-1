@@ -16,48 +16,46 @@ function MediaDevices() {
     video: true,
   };
 
-  useEffect(() => {
+  function startcamera() {
     let video = document.getElementById("video") as HTMLVideoElement;
     navigator.mediaDevices
       .getUserMedia(constraints)
       .then((MediaStream) => {
-        //Get veiod element
         setStream(MediaStream);
+        //get video element
         video.srcObject = MediaStream;
-        //Set aoutplay to true
+        //set aoutplay to true
         video.autoplay = true;
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }
 
   function takePicture() {
     let video = document.getElementById("video") as HTMLVideoElement;
     let photo = document.getElementById("photo");
     let canvas = document.getElementById("canvas") as HTMLCanvasElement;
+    // hämta URL:en?
     const data = canvas.toDataURL("image/png");
+    //oklart vad som händer här
     const context = canvas.getContext("2d");
-
     context?.drawImage(video, 0, 0, 100, 100);
+    // sätt src till  "data"
     photo?.setAttribute("src", data);
   }
-
   return (
     <section>
       Media
       <video width="750" height="500" controls id="video"></video>
       <source src={stream} type="video/mp4" />
+      <button onClick={startcamera}>Start </button>
       <button id="photoBtn" onClick={takePicture}>
         Take photo
       </button>
       <div id="photo"></div>
       <canvas id="canvas">
-        <img
-          id="photo"
-          alt="The screen capture will appear in this box."
-          src=""
-        />
+        <img id="photo" />
       </canvas>
     </section>
   );
