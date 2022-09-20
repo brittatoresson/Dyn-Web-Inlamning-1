@@ -1,8 +1,11 @@
 const express = require("express");
 const cors = require("cors");
-const app = express();
 const nedb = require("nedb-promise");
 const jwt = require("jsonwebtoken");
+const app = express();
+
+require("dotenv").config();
+
 const PORT = 5555;
 // const PORT = process.env.PORT || 5555;
 const bcryptFuncs = require("./middleware/bcrypt");
@@ -26,11 +29,13 @@ app.post("/api/signup", async (req, res) => {
     usernameExists: false,
     emailExists: false,
   };
+
+  console.log(credentials);
   //kolla igenom db om namn redan finns
-  const usernameExists = await database.find({
+  const usernameExists = await accountsDB.find({
     username: credentials.username,
   });
-  const emailExists = await database.find({
+  const emailExists = await accountsDB.find({
     email: credentials.email,
   });
 

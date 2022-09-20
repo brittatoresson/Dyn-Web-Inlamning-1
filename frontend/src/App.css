@@ -2,10 +2,39 @@
     text-align: center;
 }
 
+.main-navigation {
+    background-color: burlywood;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+}
+
 .main-navigation ul {
     display: flex;
     list-style-type: none;
     margin: 0;
-    padding: 1em;
+    padding: 0;
     gap: 1em;
+}
+
+#sign-up,
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    margin: 0 auto;
+    padding: 1rem;
+    max-width: 340px;
+}
+
+button,
+input {
+    padding: 0.5em;
+}
+
+video {
+    display: block;
+    max-width: 100%;
+    margin: 0 auto;
 }
