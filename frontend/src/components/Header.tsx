@@ -1,8 +1,11 @@
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 function Header() {
     const navigate = useNavigate();
     const location = useLocation();
+
+    const [userLoggedIn, setUserLoggedIn] = useState<boolean>();
 
     async function isLoggedIn() {
         const token: string | null = sessionStorage.getItem("token");
@@ -15,9 +18,18 @@ function Header() {
             await response.json();
 
         if (data.loggedIn === false) {
-            navigate("/account");
+            setUserLoggedIn(false);
+        } else {
+            setUserLoggedIn(true);
         }
     }
+
+    useEffect(() => {
+        isLoggedIn();
+        if (!userLoggedIn) {
+            navigate("/account");
+        }
+    }, [location.pathname]);
 
     async function logout() {
         let response = await fetch("http://localhost:5555/api/logout");
@@ -26,6 +38,7 @@ function Header() {
         if (data.success) {
             sessionStorage.clear();
             navigate("/account");
+            setUserLoggedIn(false);
         }
     }
 
@@ -43,7 +56,7 @@ function Header() {
                         <Link to="/profile">Profile</Link>
                     </li>
                 </ul>
-                <button onClick={() => logout()}>Log out</button>
+                {userLoggedIn ? <button onClick={() => logout()}>Log out</button> : <span></span>}
             </nav>
         </header>
     );

@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Account } from "../interface/interface";
 
 function SignUp() {
-    const credentials: { username: string; password: string; email: string } = {
+    const credentials: { username: string; password: string; email: string; isAdmin: boolean } = {
         username: "",
         password: "",
         email: "",
+        isAdmin: false,
     };
     const [account, setAccount] = useState<Account>(credentials);
+    const [adminBtnChecked, setAdminBtnChecked] = useState<boolean>(false);
     const [response, setResponse] = useState<boolean>();
 
     function handleChange(e: any) {
@@ -25,8 +27,12 @@ function SignUp() {
         setResponse(await data.success);
     }
 
+    useEffect(() => {
+        setAccount({ ...account, isAdmin: adminBtnChecked });
+    }, [adminBtnChecked]);
+
     return (
-        <section id="signUp">
+        <section id="sign-up">
             {response === false ? (
                 <p>Account already exists</p>
             ) : response === true ? (
@@ -55,6 +61,15 @@ function SignUp() {
                 value={account?.password}
                 onChange={(e) => handleChange(e)}
             />
+            <label htmlFor="isAdmin">
+                Admin account
+                <input
+                    type="checkbox"
+                    name="isAdmin"
+                    id="isAdmin"
+                    onChange={() => setAdminBtnChecked(!adminBtnChecked)}
+                />
+            </label>
             <button onClick={() => createAccount(account)}>Sign Up</button>
         </section>
     );
