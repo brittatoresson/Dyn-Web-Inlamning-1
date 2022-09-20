@@ -19,10 +19,12 @@ function Header() {
                 authorization: `bearer: ${token}`,
             },
         });
-        const data: { loggedIn: boolean; errorMessage: string; userdata: object } =
+        const data: { loggedIn: boolean; errorMessage: string; userdata: userData } =
             await response.json();
+
         let id = data.userdata._id;
-        localStorage.setItem("id", JSON.stringify(id));
+
+        localStorage.setItem("user-id", JSON.stringify(id));
 
         if (data.loggedIn === false) {
             setUserLoggedIn(false);
@@ -61,6 +63,9 @@ function Header() {
                     </li>
                     <li>
                         <Link to="/profile">Profile</Link>
+                    </li>
+                    <li>
+                        <Link to="/gallery">Gallery</Link>
                     </li>
                 </ul>
                 {userLoggedIn ? <button onClick={() => logout()}>Log out</button> : <span></span>}

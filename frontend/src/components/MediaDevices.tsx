@@ -48,8 +48,10 @@ function MediaDevices() {
     }
 
     async function sendToDb() {
-        let id = localStorage.getItem("id");
-        let photoObj = { savedPhoto, id };
+        let userID: string | undefined | null = localStorage.getItem("user-id");
+        userID = userID?.substring(1, userID.length - 1);
+        let photoObj = { savedPhoto, userID };
+        console.log(userID);
         const response = await fetch("http://localhost:5555/api/photodb", {
             method: "POST",
             body: JSON.stringify(photoObj),
@@ -66,7 +68,6 @@ function MediaDevices() {
 
     return (
         <section>
-            Media
             <video width="750" height="500" controls id="video"></video>
             <source src={stream} type="video/mp4" />
             <button onClick={startcamera}>Start </button>

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header";
 import AccountPage from "./pages/AccountPage";
+import GalleryPage from "./pages/GalleryPage";
 import ProfilePage from "./pages/ProfilePage";
 import StartPage from "./pages/StartPage";
 
@@ -15,6 +16,7 @@ function App() {
                     <Route path="/" element={<StartPage />} />
                     <Route path="/account" element={<AccountPage />} />
                     <Route path="/profile" element={<ProfilePage />} />
+                    <Route path="/gallery" element={<GalleryPage />} />
                 </Routes>
             </div>
         </Router>
