@@ -23,28 +23,25 @@ function MediaDevices() {
       });
   }
 
-  function takePicture() {
-    // const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+  async function takePicture() {
+    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     const video = document.getElementById("video") as HTMLVideoElement;
     const context = canvas.getContext("2d");
     context?.drawImage(video, 0, 0, 300, 250);
     const image = canvas.toDataURL("image/jpeg");
     setSavedPhoto(image);
     setViewPhoto(true);
-    sendToDb();
   }
 
   async function sendToDb() {
     let userID: string | undefined | null = localStorage.getItem("user-id");
     userID = userID?.substring(1, userID.length - 1);
     let photoObj = { savedPhoto, userID };
-    console.log(userID);
     const response = await fetch("http://localhost:5555/api/photodb", {
       method: "POST",
       body: JSON.stringify(photoObj),
       headers: { "Content-Type": "application/json" },
     });
-    console.log(response);
   }
 
   // function stopMedia() {
@@ -56,6 +53,9 @@ function MediaDevices() {
   useEffect(() => {
     startCamera();
   }, []);
+  useEffect(() => {
+    sendToDb();
+  }, [savedPhoto]);
 
   function clearphoto() {
     const context: any = canvas.getContext("2d");
@@ -66,7 +66,7 @@ function MediaDevices() {
   return (
     <section>
       <section className={viewPhoto === true ? "toggleVideo" : ""}>
-        <video width="750" height="500" controls id="video"></video>
+        <video width="750" height="500" id="video"></video>
         <button onClick={startCamera}>Start </button>
         <button id="photoBtn" onClick={takePicture}>
           Take photo
