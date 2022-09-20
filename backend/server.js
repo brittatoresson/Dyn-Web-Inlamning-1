@@ -6,7 +6,14 @@ const jwt = require("jsonwebtoken");
 const PORT = 5555;
 // const PORT = process.env.PORT || 5555;
 const bcryptFuncs = require("./middleware/bcrypt");
-const database = new nedb({ filename: "database/accounts.db", autoload: true });
+const accountsDB = new nedb({
+  filename: "database/accounts.db",
+  autoload: true,
+});
+const photosDB = new nedb({
+  filename: "database/photos.db",
+  autoload: true,
+});
 
 app.use(express.json());
 app.use(cors({ origin: "*" }));
@@ -35,7 +42,7 @@ app.post("/api/signup", async (req, res) => {
   } else {
     const hashedPassword = await bcryptFuncs.hashPassword(credentials.password);
     credentials.password = hashedPassword;
-    database.insert(credentials);
+    accountsDB.insert(credentials);
   }
   res.json(resObj);
 });
@@ -47,28 +54,75 @@ app.post("/api/login", async (req, res) => {
     success: false,
     token: "",
   };
-  console.log(credentials);
-  //set username....
-  username = req.body.username;
-  const account = await database.find({ username: credentials.username });
+
+  const account = await accountsDB.find({ username: credentials.username });
+
   if (account.length > 0) {
-    //här kollar vi löenorden mot det i databasen
-    const correctPassword = await bcryptFunctions.comparedPassword(
+    //här kollar vi lösenorden mot det i databasen
+    const passwordMatch = await bcryptFuncs.comparePassword(
       credentials.password,
       account[0].password
     );
-    if (correctPassword) {
+
+    if (passwordMatch) {
       resObj.success = true;
-      // Skapa token
-      const token = jwt.sign({ username: account[0].username }, "1a1a1a", {
-        expiresIn: 6000,
-      });
+      // JSON Web Token (blir hashad/krypterad) värdet för expiresIn är i sekunder.
+      const token = jwt.sign(
+        { username: account[0].username },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: 6000,
+        }
+      );
       resObj.token = token;
     }
+  }
+  console.log(resObj);
+  res.json(resObj);
+});
+// LOGIN CHECK
+app.get("/api/loggedin", async (req, res) => {
+  const resObj = {
+    loggedIn: false,
+    errorMessage: "",
+    userdata: {},
+  };
+  const token = req.headers.authorization.replace("bearer: ", "");
+  try {
+    const data = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(data);
+
+    if (data) {
+      resObj.loggedIn = true;
+      let userdataArr = await accountsDB.find({ username: data.username });
+      resObj.userdata = {
+        username: userdataArr[0].username,
+        email: userdataArr[0].email,
+        _id: userdataArr[0]._id,
+      };
+    }
+  } catch {
+    resObj.errorMessage = "Token expired";
   }
   res.json(resObj);
 });
 
+// LOGOUT
+app.get("/api/logout", async (request, response) => {
+  const resObj = {
+    success: true,
+  };
+  response.json(resObj);
+});
+
 app.listen(PORT, () => {
-  console.log("listen on" + PORT);
+  console.log(`server is running on post ${PORT}`);
+});
+
+//
+app.post("/api/photodb", async (req, res) => {
+  const photoObj = req.body;
+  if (photoObj) {
+    photosDB.insert(photoObj);
+  }
 });
