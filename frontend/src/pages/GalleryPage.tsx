@@ -27,12 +27,9 @@ function GalleryPage() {
         <section>
             <h1>Gallery</h1>
             <article className="gallery-grid">
-                {galleryImages.map((imgData: any) => (
-                    <div>
-                        <p>{imgData.userID}</p>
-                        <canvas>
-                            <img src={imgData.savedPhoto}></img>
-                        </canvas>
+                {galleryImages.map((imgData: any, i: number) => (
+                    <div key={i}>
+                        <img src={imgData?.savedPhoto} alt="webcam"></img>
                     </div>
                 ))}
             </article>

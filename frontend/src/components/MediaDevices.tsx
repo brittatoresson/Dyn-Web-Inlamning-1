@@ -1,28 +1,16 @@
-import { useState } from "react";
-
-interface Stream {
-    active: boolean;
-    id: string;
-    onactive?: null | {};
-    onaddtrack: null | {};
-    oninactive?: null | {};
-    onremovetrack: null | {};
-}
+import { useState, useEffect } from "react";
 
 function MediaDevices() {
-    const [stream, setStream] = useState<any>();
+    // const [stream, setStream] = useState<any>();
     const [savedPhoto, setSavedPhoto] = useState<any>();
-    const constraints = {
-        audio: false,
-        video: true,
-    };
+    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 
-    function startcamera() {
-        let video = document.getElementById("video") as HTMLVideoElement;
+    function startCamera() {
+        const video = document.getElementById("video") as HTMLVideoElement;
         navigator.mediaDevices
-            .getUserMedia(constraints)
+            .getUserMedia({ audio: false, video: true })
             .then((MediaStream) => {
-                setStream(MediaStream);
+                // setStream(MediaStream);
                 //get video element
                 video.srcObject = MediaStream;
                 //set aoutplay to true
@@ -34,17 +22,13 @@ function MediaDevices() {
     }
 
     function takePicture() {
-        let video = document.getElementById("video") as HTMLVideoElement;
-        let photo = document.getElementById("photo");
-        let canvas = document.getElementById("canvas") as HTMLCanvasElement;
-        // hämta URL:en?
-        const data = canvas.toDataURL("image/png");
-        //oklart vad som händer här
+        const video = document.getElementById("video") as HTMLVideoElement;
         const context = canvas.getContext("2d");
-        context?.drawImage(video, 0, 0, 100, 100);
-        // sätt src till  "data"
-        photo?.setAttribute("src", data);
-        setSavedPhoto(data);
+        context?.drawImage(video, 0, 0, 300, 250);
+        const image = canvas.toDataURL("image/jpeg");
+        setSavedPhoto(image);
+
+        console.log(savedPhoto);
     }
 
     async function sendToDb() {
@@ -57,27 +41,29 @@ function MediaDevices() {
             body: JSON.stringify(photoObj),
             headers: { "Content-Type": "application/json" },
         });
-        // const data = await response.json();
+        console.log(response);
     }
 
-    function stopMedia() {
-        stream.getTracks().forEach((mediaTrack: { stop: () => void }) => {
-            mediaTrack.stop();
-        });
-    }
+    // function stopMedia() {
+    //     stream.getTracks().forEach((mediaTrack: { stop: () => void }) => {
+    //         mediaTrack.stop();
+    //     });
+    // }
+
+    useEffect(() => {
+        startCamera();
+    }, []);
 
     return (
         <section>
-            <video width="750" height="500" controls id="video"></video>
-            <source src={stream} type="video/mp4" />
-            <button onClick={startcamera}>Start </button>
+            <video width="750" height="500" id="video"></video>
+            {/* <button onClick={startcamera}>Start </button> */}
             <button id="photoBtn" onClick={takePicture}>
                 Take photo
             </button>
             <button onClick={sendToDb}>Save photo</button>
-            <button onClick={stopMedia}>Close</button>
-            <div id="photo"></div>
-            <canvas id="canvas">
+            {/* <button onClick={stopMedia}>Close</button> */}
+            <canvas width="300" height="250" id="canvas">
                 <img id="photo" />
             </canvas>
         </section>
