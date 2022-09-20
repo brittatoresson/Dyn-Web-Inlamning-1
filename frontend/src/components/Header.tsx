@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
+interface userData {
+  _id?: "";
+  userdata: { _id: "" };
+}
+
 function Header() {
-    const navigate = useNavigate();
-    const location = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
 
     const [userLoggedIn, setUserLoggedIn] = useState<boolean>();
 
@@ -16,6 +21,8 @@ function Header() {
         });
         const data: { loggedIn: boolean; errorMessage: string; userdata: object } =
             await response.json();
+            let id = data.userdata._id;
+            localStorage.setItem("id", JSON.stringify(id));
 
         if (data.loggedIn === false) {
             setUserLoggedIn(false);
@@ -23,6 +30,7 @@ function Header() {
             setUserLoggedIn(true);
         }
     }
+  }
 
     useEffect(() => {
         isLoggedIn();
@@ -41,6 +49,7 @@ function Header() {
             setUserLoggedIn(false);
         }
     }
+  }
 
     return (
         <header>
