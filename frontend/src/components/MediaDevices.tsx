@@ -64,19 +64,6 @@ function MediaDevices() {
   }
 
   return (
-    // <section>
-    //   <video width="750" height="500" id="video"></video>
-    //   {/* <button onClick={startcamera}>Start </button> */}
-    //   <button id="photoBtn" onClick={takePicture}>
-    //     Take photo
-    //   </button>
-    //   <button onClick={sendToDb}>Save photo</button>
-    //   {/* <button onClick={stopMedia}>Close</button> */}
-    //   <canvas width="300" height="250" id="canvas">
-    //     <img id="photo" />
-    //   </canvas>
-
-    // </section>
     <section>
       <section className={viewPhoto === true ? "toggleVideo" : ""}>
         <video width="750" height="500" controls id="video"></video>
@@ -88,7 +75,6 @@ function MediaDevices() {
       <canvas id="canvas">
         <img id="photo" />
       </canvas>
-
       {viewPhoto === true ? (
         <button
           onClick={() => {
