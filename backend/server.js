@@ -121,7 +121,6 @@ app.post("/api/photodb", async (req, res) => {
     if (photoObj) {
         photosDB.insert(photoObj);
     }
-    res.json("photo submitted");
 });
 
 app.get("/api/photodb", async (req, res) => {

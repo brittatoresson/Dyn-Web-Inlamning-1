@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 function MediaDevices() {
     // const [stream, setStream] = useState<any>();
     const [savedPhoto, setSavedPhoto] = useState<any>();
-    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 
     function startCamera() {
         const video = document.getElementById("video") as HTMLVideoElement;
@@ -23,19 +22,17 @@ function MediaDevices() {
 
     function takePicture() {
         const video = document.getElementById("video") as HTMLVideoElement;
+        const canvas = document.getElementById("canvas") as HTMLCanvasElement;
         const context = canvas.getContext("2d");
         context?.drawImage(video, 0, 0, 300, 250);
         const image = canvas.toDataURL("image/jpeg");
         setSavedPhoto(image);
-
-        console.log(savedPhoto);
     }
 
     async function sendToDb() {
         let userID: string | undefined | null = localStorage.getItem("user-id");
         userID = userID?.substring(1, userID.length - 1);
         let photoObj = { savedPhoto, userID };
-        console.log(userID);
         const response = await fetch("http://localhost:5555/api/photodb", {
             method: "POST",
             body: JSON.stringify(photoObj),

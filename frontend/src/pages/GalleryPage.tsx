@@ -17,7 +17,10 @@ function GalleryPage() {
 
         const data = await response.json();
         setGalleryImages(await data);
+        console.log(data);
     }
+
+    function removeImage(event: any) {}
 
     useEffect(() => {
         getGalleryImages();
@@ -30,6 +33,7 @@ function GalleryPage() {
                 {galleryImages.map((imgData: any, i: number) => (
                     <div key={i}>
                         <img src={imgData?.savedPhoto} alt="webcam"></img>
+                        <button onClick={(e) => removeImage(e)}>delete img</button>
                     </div>
                 ))}
             </article>
