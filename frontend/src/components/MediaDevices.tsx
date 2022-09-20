@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface Stream {
   active: boolean;
@@ -11,6 +11,7 @@ interface Stream {
 
 function MediaDevices() {
   const [stream, setStream] = useState<any>();
+  const [savedPhoto, setSavedPhoto] = useState<any>();
   const constraints = {
     audio: false,
     video: true,
@@ -43,7 +44,26 @@ function MediaDevices() {
     context?.drawImage(video, 0, 0, 100, 100);
     // sätt src till  "data"
     photo?.setAttribute("src", data);
+    setSavedPhoto(data);
   }
+
+  async function sendToDb() {
+    let id = localStorage.getItem("id");
+    let photoObj = { savedPhoto, id };
+    const response = await fetch("http://localhost:5555/api/photodb", {
+      method: "POST",
+      body: JSON.stringify(photoObj),
+      headers: { "Content-Type": "application/json" },
+    });
+    // const data = await response.json();
+  }
+
+  function stopMedia() {
+    stream.getTracks().forEach((mediaTrack: { stop: () => void }) => {
+      mediaTrack.stop();
+    });
+  }
+
   return (
     <section>
       Media
@@ -53,6 +73,8 @@ function MediaDevices() {
       <button id="photoBtn" onClick={takePicture}>
         Take photo
       </button>
+      <button onClick={sendToDb}>Save photo</button>
+      <button onClick={stopMedia}>Close</button>
       <div id="photo"></div>
       <canvas id="canvas">
         <img id="photo" />
