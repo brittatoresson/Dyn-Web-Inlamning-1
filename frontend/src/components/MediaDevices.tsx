@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 function MediaDevices() {
     const [savedPhoto, setSavedPhoto] = useState<any>();
-    const [viewPhoto, setViewPhoto] = useState(false);
+    const [viewPhoto, setViewPhoto] = useState<boolean>(false);
 
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 

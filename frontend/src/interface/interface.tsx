@@ -15,3 +15,9 @@ interface StateStart {
     start: boolean;
     setStart: (active: boolean) => void;
 }
+
+export interface userData {
+  _id?: "";
+  userdata: { _id: ""; username: "" };
+  username: "";
+}

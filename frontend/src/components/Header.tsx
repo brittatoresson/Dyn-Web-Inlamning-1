@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Start } from "../interface/interface";
+import { Start, userData } from "../interface/interface";
 import menuIcon from "../assets/menu.svg";
-
-interface userData {
-    _id?: "";
-    userdata: { _id: ""; username: "" };
-    username: "";
-}
 
 function Header(prop: Start) {
     const navigate = useNavigate();
@@ -50,13 +44,6 @@ function Header(prop: Start) {
             navigate("/account");
         }
     }, [location.pathname]);
-
-    useEffect(() => {
-        if (userLoggedIn) {
-            navigate("/");
-            start.setStart(false);
-        }
-    }, [userLoggedIn]);
 
     async function logout() {
         let response = await fetch("http://localhost:5555/api/logout");
