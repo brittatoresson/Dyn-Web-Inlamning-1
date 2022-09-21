@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 function MediaDevices() {
-  const [savedPhoto, setSavedPhoto] = useState();
+  const [savedPhoto, setSavedPhoto] = useState<Object>();
   const [viewPhoto, setViewPhoto] = useState(false);
 
   const canvas = document.getElementById("canvas") as HTMLCanvasElement;
@@ -54,9 +54,11 @@ function MediaDevices() {
   }, [savedPhoto]);
 
   function clearphoto() {
-    const context: any = canvas.getContext("2d");
-    context.fillStyle = "#FFF";
-    context.fillRect(0, 0, canvas.width, canvas.height);
+    const context: CanvasRenderingContext2D | null = canvas.getContext("2d");
+    if (context) {
+      context.fillStyle = "#FFF";
+      context.fillRect(0, 0, canvas.width, canvas.height);
+    }
   }
 
   return (

@@ -6,10 +6,7 @@ function Login() {
 
   async function login(event: any) {
     event.preventDefault();
-    console.log(event);
-
     const input = event.target;
-    console.log(input);
 
     let account: { username: string; password: string } = {
       username: input[0].value,

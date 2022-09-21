@@ -77,9 +77,11 @@ function Header(prop: Start) {
           <li onClick={() => start.setStart(false)}>
             <Link to="/">Start</Link>
           </li>
-          <li>
-            <Link to="/account">Log In</Link>
-          </li>
+          {userLoggedIn === false ? (
+            <li>
+              <Link to="/account">Log In</Link>
+            </li>
+          ) : null}
           <li>
             <Link to="/profile">Profile</Link>
           </li>
@@ -87,7 +89,7 @@ function Header(prop: Start) {
             <Link to="/gallery">Gallery</Link>
           </li>
         </ul>
-        <p> Account: {user.username}</p>
+        {userLoggedIn === true ? <p> Account: {user.username}</p> : null}
         {userLoggedIn ? (
           <button onClick={() => logout()}>Log out</button>
         ) : (
