@@ -1,4 +1,4 @@
-import React from "react";
+import { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
@@ -27,7 +27,7 @@ function Login() {
   }
 
   return (
-    <form className="login-form" onSubmit={(e) => login(e)}>
+    <form className="login-form" onSubmit={(e: any) => login(e)}>
       <input
         type="text"
         name="login-username"

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Start, userData } from "../interface/interface";
+import menuIcon from "../assets/menu.svg";
 
 function Header(prop: Start) {
   const navigate = useNavigate();

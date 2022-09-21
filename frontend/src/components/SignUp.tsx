@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, ChangeEvent } from "react";
 import { Account } from "../interface/interface";
 import { handleInput } from "../interface/interface";
 
@@ -20,6 +20,7 @@ function SignUp() {
 
     function handleChange(e: handleInput) {
         setAccount({ ...account, [e.target.name]: e.target.value });
+        console.log(typeof e);
     }
 
     async function createAccount(account: Account) {
@@ -54,14 +55,14 @@ function SignUp() {
                 placeholder="username"
                 name="username"
                 value={account?.username}
-                onChange={(e: any) => handleChange(e)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)}
             />
             <input
                 type="email"
                 placeholder="email"
                 name="email"
                 value={account?.email}
-                onChange={(e: any) => handleChange(e)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)}
             />
             <input
                 type="password"
