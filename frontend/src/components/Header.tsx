@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Start } from "../interface/interface";
+import menuIcon from "../assets/menu.svg";
 
 interface userData {
     _id?: "";
@@ -70,9 +71,11 @@ function Header(prop: Start) {
 
     return (
         <header>
-            <button className="header-btn" onClick={() => setToggleNavigation(!toggleNavigation)}>
-                #
-            </button>
+            <img
+                src={menuIcon}
+                className="header-btn"
+                onClick={() => setToggleNavigation(!toggleNavigation)}
+            ></img>
             <nav className={toggleNavigation ? "main-nav" : "main-nav toggle-visibility"}>
                 <ul onClick={() => setToggleNavigation(!toggleNavigation)}>
                     <li onClick={() => start.setStart(false)}>

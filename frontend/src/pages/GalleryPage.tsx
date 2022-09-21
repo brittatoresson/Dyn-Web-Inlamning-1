@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import xMark from "../assets/xmark-solid.svg";
 
 function GalleryPage() {
     const [galleryImages, setGalleryImages] = useState<Array<object>>([{}]);
@@ -44,9 +45,11 @@ function GalleryPage() {
                 {galleryImages.map((imgData: any, i: number) => (
                     <div className="gallery-img-box" key={i}>
                         <img className="gallery-img" src={imgData?.savedPhoto} alt="webcam" />
-                        <button className="gallery-img-btn" onClick={() => removeImage(imgData)}>
-                            X
-                        </button>
+                        <img
+                            className="gallery-img-btn"
+                            src={xMark}
+                            onClick={() => removeImage(imgData)}
+                        />
                     </div>
                 ))}
             </article>

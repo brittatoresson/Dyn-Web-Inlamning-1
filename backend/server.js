@@ -124,6 +124,7 @@ app.get("/api/photodb", async (req, res) => {
     const user = req.headers.authorization;
     const userID = user.replace("user-id: ", "");
     let userPhotos = await photosDB.find({ userID: userID });
+
     /// ADMIN ACCESS
     const adminUsersArray = await accountsDB.find({ isAdmin: true });
     let findAdminUser = adminUsersArray.find((id) => id._id === userID);
