@@ -1,2 +1,5 @@
 /backend/node_modules
+/backend/.env
+/backend/database/accounts.db
+/backend/database/photos.db
 /frontend/node_modules
