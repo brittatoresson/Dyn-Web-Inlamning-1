@@ -7,6 +7,7 @@ function Header(prop: Start) {
   const location = useLocation();
   const [user, setUser] = useState({ username: "" });
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>();
+  const [toggleNavigation, setToggleNavigation] = useState<boolean>(false);
   let start = prop.state;
 
   async function isLoggedIn() {
@@ -37,18 +38,18 @@ function Header(prop: Start) {
   }
 
   useEffect(() => {
-    if (userLoggedIn === true) {
-      navigate("/");
-      start.setStart(false);
-    }
-  }, [userLoggedIn]);
-
-  useEffect(() => {
     isLoggedIn();
     if (!userLoggedIn) {
       navigate("/account");
     }
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (userLoggedIn) {
+      navigate("/");
+      start.setStart(false);
+    }
+  }, [userLoggedIn]);
 
   async function logout() {
     let response = await fetch("http://localhost:5555/api/logout");
@@ -63,33 +64,36 @@ function Header(prop: Start) {
 
   return (
     <header>
-      {userLoggedIn === true ? (
-        <nav className="main-navigation">
-          <ul onClick={() => isLoggedIn()}>
-            <li onClick={() => start.setStart(false)}>
-              <Link to="/">Start</Link>
-            </li>
-            {/* {userLoggedIn === false ? (
-              <li>
-                <Link to="/account">Log In</Link>
-              </li>
-            ) : null} */}
-            <li>
-              <Link to="/profile">Profile</Link>
-            </li>
-
-            <li>
-              <Link to="/gallery">Gallery</Link>
-            </li>
-            <li> Account: {user.username}</li>
-          </ul>
-          {userLoggedIn ? (
-            <button onClick={() => logout()}>Log out</button>
-          ) : (
-            <span></span>
-          )}
-        </nav>
-      ) : null}
+      <button
+        className="header-btn"
+        onClick={() => setToggleNavigation(!toggleNavigation)}
+      >
+        #
+      </button>
+      <nav
+        className={toggleNavigation ? "main-nav" : "main-nav toggle-visibility"}
+      >
+        <ul onClick={() => setToggleNavigation(!toggleNavigation)}>
+          <li onClick={() => start.setStart(false)}>
+            <Link to="/">Start</Link>
+          </li>
+          <li>
+            <Link to="/account">Log In</Link>
+          </li>
+          <li>
+            <Link to="/profile">Profile</Link>
+          </li>
+          <li>
+            <Link to="/gallery">Gallery</Link>
+          </li>
+        </ul>
+        <p> Account: {user.username}</p>
+        {userLoggedIn ? (
+          <button onClick={() => logout()}>Log out</button>
+        ) : (
+          <span></span>
+        )}
+      </nav>
     </header>
   );
 }
