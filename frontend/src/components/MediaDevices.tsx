@@ -59,33 +59,6 @@ function MediaDevices() {
     context.fillRect(0, 0, canvas.width, canvas.height);
   }
 
-  async function sendToDb() {
-    let userID: string | undefined | null = localStorage.getItem("user-id");
-    userID = userID?.substring(1, userID.length - 1);
-    let photoObj = { savedPhoto, userID };
-    const response = await fetch("http://localhost:5555/api/photodb", {
-      method: "POST",
-      body: JSON.stringify(photoObj),
-      headers: { "Content-Type": "application/json" },
-    });
-  }
-
-  useEffect(() => {
-    startCamera();
-  }, []);
-
-  useEffect(() => {
-    if (savedPhoto !== undefined) {
-      sendToDb();
-    }
-  }, [savedPhoto]);
-
-  function clearphoto() {
-    const context: any = canvas.getContext("2d");
-    context.fillStyle = "#FFF";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-  }
-
   return (
     <section>
       <section className={viewPhoto ? "toggle-visibility" : ""}>
