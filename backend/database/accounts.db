@@ -2,3 +2,4 @@
 {"username":"marcus-df","password":"$2a$10$5k3TLal/7MVX1OekCck1lOi9RFasjtjqg2a3tzvvm.W2VBk4DiE7q","email":"marcus@mail.com","isAdmin":true,"_id":"7n7iwF8nwfRO4mcx"}
 {"username":"admin","password":"$2a$10$iBC8u8yYnW52W0Qic/4lwOWJ/h3KeMg/W5KwkryvrCRFlviLawL9y","email":"admin","isAdmin":true,"_id":"LJaYdvLUM9xPpDn9"}
 {"username":"brito","password":"$2a$10$KKP1x26nYYNPn8w.VBAlTO3CIPOF2krNqDWS/iD.uQKeYXgqnD5Va","email":"brito","isAdmin":false,"_id":"m1FYwZxJICns1NHa"}
+{"username":"","password":"$2a$10$heAPANi9OQV4GaAvEi7A5.RTS1Gy.o/1J1XCikE5o0ZyFFyiD6D.i","email":"","isAdmin":false,"_id":"vLA4TUPYrFcX5pdW"}

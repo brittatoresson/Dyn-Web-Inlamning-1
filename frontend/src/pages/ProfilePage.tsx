@@ -2,12 +2,12 @@ import React from "react";
 import Profile from "../components/Profile";
 
 function ProfilePage() {
-  return (
-    <div>
-      <h1>Profile</h1>
-      <Profile />
-    </div>
-  );
+    return (
+        <section>
+            <h1>Profile</h1>
+            <Profile />
+        </section>
+    );
 }
 
 export default ProfilePage;

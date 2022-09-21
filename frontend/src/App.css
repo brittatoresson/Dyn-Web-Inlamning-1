@@ -1,21 +1,88 @@
+body {
+    background-color: #2a2e30;
+}
+
+body,
+a {
+    color: #fff;
+}
+
+input {
+    padding: 0.5em;
+}
+
+button,
+input[type="submit"] {
+    background-color: #fff;
+    border: solid 1px #2a2e30;
+    border-radius: 4px;
+    padding: 1em 1.5em;
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+button:hover,
+button:focus,
+input[type="submit"]:hover,
+input[type="submit"]:focus {
+    background-color: #2a2e30;
+    color: #fff;
+    border: solid 1px #fff;
+}
+
 .App {
     text-align: center;
 }
 
-.main-navigation {
-    background-color: burlywood;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1em;
+header {
+    max-width: 100%;
+    min-height: 4rem;
 }
 
-.main-navigation ul {
+.header-btn {
+    position: absolute;
+    z-index: 20;
+    right: 1em;
+    top: 0.75em;
+}
+
+.main-nav {
+    position: absolute;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 10;
+
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(32, 32, 32);
+}
+
+.main-nav ul {
+    display: flex;
+    flex-direction: column;
     list-style-type: none;
+    padding: 1em;
     margin: 0;
-    padding: 0;
     gap: 1em;
+
+    font-size: 3rem;
+}
+
+.main-nav a {
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.main-nav a:hover,
+.main-nav a:focus {
+    color: rgb(255, 147, 147);
+    text-decoration: underline;
 }
 
 #sign-up,
@@ -26,11 +93,6 @@
     padding: 1rem;
     margin: 0 auto;
     max-width: 340px;
-}
-
-button,
-input {
-    padding: 0.5em;
 }
 
 video {
@@ -85,6 +147,7 @@ section canvas {
     left: 4px;
     width: 2.5em;
     height: 2.5em;
+    padding: 0;
 
     border-radius: 50%;
     border: 1px solid #fff;

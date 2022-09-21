@@ -4,10 +4,10 @@ import SignUp from "../components/SignUp";
 
 function AccountPage() {
     return (
-        <div>
+        <section>
             <SignUp />
             <Login />
-        </div>
+        </section>
     );
 }
 
