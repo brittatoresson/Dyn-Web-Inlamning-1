@@ -84,3 +84,6 @@ section canvas {
 .gallery-grid div img {
     width: 20vw;
 }
+#profile p:last-of-type:hover {
+  cursor: pointer;
+}
