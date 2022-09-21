@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Start } from "../interface/interface";
 
 interface userData {
   _id?: "";
@@ -7,11 +8,12 @@ interface userData {
   username: "";
 }
 
-function Header() {
+function Header(prop: Start) {
   const navigate = useNavigate();
   const location = useLocation();
   const [user, setUser] = useState({ username: "" });
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>();
+  let start = prop.state;
 
   async function isLoggedIn() {
     const token: string | null = sessionStorage.getItem("token");
@@ -41,6 +43,13 @@ function Header() {
   }
 
   useEffect(() => {
+    if (userLoggedIn === true) {
+      navigate("/");
+      start.setStart(false);
+    }
+  }, [userLoggedIn]);
+
+  useEffect(() => {
     isLoggedIn();
     if (!userLoggedIn) {
       navigate("/account");
@@ -60,28 +69,33 @@ function Header() {
 
   return (
     <header>
-      <nav className="main-navigation">
-        <ul onClick={() => isLoggedIn()}>
-          <li>
-            <Link to="/">Start</Link>
-          </li>
-          <li>
-            <Link to="/account">Log In</Link>
-          </li>
-          <li>
-            <Link to="/profile">Profile</Link>
-          </li>
-          <li>
-            <Link to="/gallery">Gallery</Link>
-          </li>
-          <li> Account: {user.username}</li>
-        </ul>
-        {userLoggedIn ? (
-          <button onClick={() => logout()}>Log out</button>
-        ) : (
-          <span></span>
-        )}
-      </nav>
+      {userLoggedIn === true ? (
+        <nav className="main-navigation">
+          <ul onClick={() => isLoggedIn()}>
+            <li onClick={() => start.setStart(false)}>
+              <Link to="/">Start</Link>
+            </li>
+            {/* {userLoggedIn === false ? (
+              <li>
+                <Link to="/account">Log In</Link>
+              </li>
+            ) : null} */}
+            <li>
+              <Link to="/profile">Profile</Link>
+            </li>
+
+            <li>
+              <Link to="/gallery">Gallery</Link>
+            </li>
+            <li> Account: {user.username}</li>
+          </ul>
+          {userLoggedIn ? (
+            <button onClick={() => logout()}>Log out</button>
+          ) : (
+            <span></span>
+          )}
+        </nav>
+      ) : null}
     </header>
   );
 }
