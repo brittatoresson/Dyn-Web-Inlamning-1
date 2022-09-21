@@ -14,10 +14,10 @@ function GalleryPage() {
                 authorization: `user-id: ${userID}`,
             },
         });
-
         const data = await response.json();
         setGalleryImages(await data);
         console.log(data);
+        return data;
     }
 
     function removeImage(event: any) {

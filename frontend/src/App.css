@@ -38,7 +38,6 @@ video {
     max-width: 100%;
     margin: 0 auto;
 }
-/* britta */
 
 .toggleVideo {
     display: none;
@@ -63,4 +62,18 @@ section canvas {
     position: absolute;
     top: 0;
     left: 0;
+}
+
+.gallery-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.gallery-grid div {
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery-grid div img {
+  width: 20vw;
 }
