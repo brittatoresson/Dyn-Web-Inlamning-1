@@ -90,7 +90,7 @@ app.get("/api/loggedin", async (req, res) => {
     errorMessage: "",
     userdata: {},
   };
-  const token = req.headers.authorization.replace("bearer: ", "");
+  const token = req.headers.authorization?.replace("bearer: ", "");
   try {
     const data = jwt.verify(token, process.env.JWT_SECRET);
     if (data) {
@@ -127,12 +127,10 @@ app.get("/api/photodb", async (req, res) => {
   const user = req.headers.authorization;
   const userID = user.replace("user-id: ", "");
   let userPhotos = await photosDB.find({ userID: userID });
-
   /// ADMIN ACCESS
   const adminUsersArray = await accountsDB.find({ isAdmin: true });
   let findAdminUser = adminUsersArray.find((id) => id._id === userID);
   findAdminUser ? (userPhotos = await photosDB.find({})) : null;
-
   res.json(userPhotos);
 });
 
