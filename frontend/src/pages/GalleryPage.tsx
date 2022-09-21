@@ -20,7 +20,10 @@ function GalleryPage() {
         console.log(data);
     }
 
-    function removeImage(event: any) {}
+    function removeImage(event: any) {
+        const target = event.target;
+        console.log(target);
+    }
 
     useEffect(() => {
         getGalleryImages();
@@ -31,9 +34,11 @@ function GalleryPage() {
             <h1>Gallery</h1>
             <article className="gallery-grid">
                 {galleryImages.map((imgData: any, i: number) => (
-                    <div key={i}>
-                        <img src={imgData?.savedPhoto} alt="webcam"></img>
-                        <button onClick={(e) => removeImage(e)}>delete img</button>
+                    <div className="gallery-img-box" key={i}>
+                        <img className="gallery-img" src={imgData?.savedPhoto} alt="webcam" />
+                        <button className="gallery-img-btn" onClick={(e) => removeImage(e)}>
+                            X
+                        </button>
                     </div>
                 ))}
             </article>
