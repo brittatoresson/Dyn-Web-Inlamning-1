@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 
 function MediaDevices() {
-    // const [stream, setStream] = useState<any>();
     const [savedPhoto, setSavedPhoto] = useState<any>();
     const [viewPhoto, setViewPhoto] = useState(false);
 
@@ -12,7 +11,6 @@ function MediaDevices() {
         navigator.mediaDevices
             .getUserMedia({ audio: false, video: true })
             .then((MediaStream) => {
-                // setStream(MediaStream);
                 //get video element
                 video.srcObject = MediaStream;
                 //set aoutplay to true
@@ -43,12 +41,6 @@ function MediaDevices() {
             headers: { "Content-Type": "application/json" },
         });
     }
-
-    // function stopMedia() {
-    //     stream.getTracks().forEach((mediaTrack: { stop: () => void }) => {
-    //         mediaTrack.stop();
-    //     });
-    // }
 
     useEffect(() => {
         startCamera();
