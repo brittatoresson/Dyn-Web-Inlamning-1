@@ -68,29 +68,30 @@ function MediaDevices() {
 
     return (
         <section>
-            <section className={viewPhoto === true ? "toggleVideo" : ""}>
+            <section className={viewPhoto ? "toggle-visibility" : ""}>
                 <video width="750" height="500" id="video"></video>
                 <button onClick={startCamera}>Start</button>
                 <button id="photoBtn" onClick={takePicture}>
                     Take photo
                 </button>
             </section>
-            <canvas id="canvas">
+            <canvas
+                width="300"
+                height="250"
+                id="canvas"
+                className={!viewPhoto ? "toggle-visibility" : ""}
+            >
                 <img id="photo" />
             </canvas>
-            {viewPhoto === true ? (
-                <button
-                    onClick={() => {
-                        setViewPhoto(false);
-                        clearphoto();
-                    }}
-                >
-                    {" "}
-                    Fånga ett nytt ögonblick
-                </button>
-            ) : (
-                ""
-            )}
+            <button
+                className={!viewPhoto ? "toggle-visibility" : ""}
+                onClick={() => {
+                    setViewPhoto(false);
+                    clearphoto();
+                }}
+            >
+                Fånga ett nytt ögonblick
+            </button>
         </section>
     );
 }

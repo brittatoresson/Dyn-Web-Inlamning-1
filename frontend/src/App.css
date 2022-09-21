@@ -39,7 +39,7 @@ video {
     margin: 0 auto;
 }
 
-.toggleVideo {
+.toggle-visibility {
     display: none;
 }
 
