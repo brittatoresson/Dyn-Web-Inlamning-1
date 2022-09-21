@@ -7,7 +7,6 @@ function GalleryPage() {
   async function getGalleryImages() {
     let userID: string | undefined | null = localStorage.getItem("user-id");
     userID = userID?.substring(1, userID.length - 1);
-
     const response = await fetch("http://localhost:5555/api/photodb", {
       method: "GET",
       headers: {
@@ -16,7 +15,6 @@ function GalleryPage() {
     });
     const data = await response.json();
     setGalleryImages(await data);
-    console.log(data);
     return data;
   }
 

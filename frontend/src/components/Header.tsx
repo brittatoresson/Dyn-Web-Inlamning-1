@@ -29,6 +29,7 @@ function Header() {
     let id = data.userdata._id;
 
     localStorage.setItem("user-id", JSON.stringify(id));
+    localStorage.setItem("isAdmin", JSON.stringify(data.userdata.username));
 
     setUser(data.userdata);
 
