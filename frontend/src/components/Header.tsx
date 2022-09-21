@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Start } from "../interface/interface";
-
-interface userData {
-  _id?: "";
-  userdata: { _id: ""; username: "" };
-  username: "";
-}
+import { Start, userData } from "../interface/interface";
 
 function Header(prop: Start) {
   const navigate = useNavigate();
