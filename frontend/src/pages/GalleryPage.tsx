@@ -16,13 +16,22 @@ function GalleryPage() {
         });
         const data = await response.json();
         setGalleryImages(await data);
-        console.log(data);
-        return data;
     }
 
-    function removeImage(event: any) {
-        const target = event.target;
-        console.log(target);
+    async function removeImage(image: any) {
+        const sendData = {
+            userID: image.userID,
+            imageID: image._id,
+        };
+
+        const response = await fetch("http://localhost:5555/api/photodb", {
+            method: "DELETE",
+            body: JSON.stringify(sendData),
+            headers: { "Content-Type": "application/json" },
+        });
+        const data = await response.json();
+        console.log(data);
+        getGalleryImages();
     }
 
     useEffect(() => {
@@ -36,7 +45,7 @@ function GalleryPage() {
                 {galleryImages.map((imgData: any, i: number) => (
                     <div className="gallery-img-box" key={i}>
                         <img className="gallery-img" src={imgData?.savedPhoto} alt="webcam" />
-                        <button className="gallery-img-btn" onClick={(e) => removeImage(e)}>
+                        <button className="gallery-img-btn" onClick={() => removeImage(imgData)}>
                             X
                         </button>
                     </div>

@@ -42,6 +42,7 @@ video {
 .toggleVideo {
     display: none;
 }
+
 video,
 canvas {
     display: block;
@@ -60,20 +61,26 @@ section canvas {
 
 .gallery-img-btn {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 4px;
+    left: 4px;
+    width: 2.5em;
+    height: 2.5em;
+
+    border-radius: 50%;
+    border: 1px solid #fff;
 }
 
 .gallery-grid {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1em;
 }
-.gallery-grid div {
-  display: flex;
-  flex-direction: column;
-}
+/* .gallery-grid div {
+    display: flex;
+    flex-direction: column;
+} */
 
 .gallery-grid div img {
-  width: 20vw;
+    width: 20vw;
 }
