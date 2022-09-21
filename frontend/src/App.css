@@ -144,7 +144,6 @@ canvas {
 }
 
 .gallery-img-box {
-    max-width: fit-content;
     position: relative;
 }
 
@@ -170,12 +169,6 @@ canvas {
     .gallery-grid {
         grid-template-columns: 1fr 1fr 1fr;
     }
-    .gallery-grid {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 1em;
-    }
 }
 
 @media screen and (min-width: 1240px) {
@@ -183,9 +176,7 @@ canvas {
         grid-template-columns: 1fr 1fr 1fr 1fr;
         margin: 0 auto;
     }
-    .gallery-grid div img {
-        width: 20vw;
-    }
+
     #profile p:last-of-type:hover {
         cursor: pointer;
     }
