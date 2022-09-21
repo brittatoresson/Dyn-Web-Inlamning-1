@@ -1,5 +1,9 @@
+:root {
+    --bg-color: #2a2e30;
+}
+
 body {
-    background-color: #2a2e30;
+    background-color: var(--bg-color);
 }
 
 body,
@@ -14,7 +18,7 @@ input {
 button,
 input[type="submit"] {
     background-color: #fff;
-    border: solid 1px #2a2e30;
+    border: solid 1px var(--bg-color);
     border-radius: 4px;
     padding: 1em 1.5em;
     font-weight: 700;
@@ -26,13 +30,17 @@ button:hover,
 button:focus,
 input[type="submit"]:hover,
 input[type="submit"]:focus {
-    background-color: #2a2e30;
+    background-color: var(--bg-color);
     color: #fff;
     border: solid 1px #fff;
 }
 
 .App {
     text-align: center;
+}
+
+#start-page img {
+    max-width: 100vw;
 }
 
 header {
@@ -90,8 +98,8 @@ header {
     display: flex;
     flex-direction: column;
     gap: 0.5em;
-    padding: 1rem;
     margin: 0 auto;
+    padding: 1rem;
     max-width: 340px;
 }
 
@@ -101,6 +109,10 @@ video {
     margin: 0 auto;
 }
 
+.toggleVideo {
+    display: none;
+}
+
 video,
 canvas {
     display: block;
@@ -108,9 +120,9 @@ canvas {
     margin: 1em auto;
 }
 
-section canvas {
-    border: 1px solid black;
-}
+/* section canvas {
+  border: 1px solid black;
+} */
 
 .toggle-visibility {
     display: none;
@@ -132,6 +144,7 @@ section canvas {
 }
 
 .gallery-img-box {
+    max-width: fit-content;
     position: relative;
 }
 
@@ -157,11 +170,23 @@ section canvas {
     .gallery-grid {
         grid-template-columns: 1fr 1fr 1fr;
     }
+    .gallery-grid {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1em;
+    }
 }
 
 @media screen and (min-width: 1240px) {
     .gallery-grid {
         grid-template-columns: 1fr 1fr 1fr 1fr;
         margin: 0 auto;
+    }
+    .gallery-grid div img {
+        width: 20vw;
+    }
+    #profile p:last-of-type:hover {
+        cursor: pointer;
     }
 }

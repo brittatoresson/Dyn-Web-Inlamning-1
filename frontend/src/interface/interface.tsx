@@ -7,3 +7,11 @@ export interface Account {
 export interface handleInput {
   target: { value: string; name: string };
 }
+
+export interface Start {
+  state: StateStart;
+}
+interface StateStart {
+  start: boolean;
+  setStart: (active: boolean) => void;
+}

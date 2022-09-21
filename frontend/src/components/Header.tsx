@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Start } from "../interface/interface";
 
 interface userData {
     _id?: "";
@@ -7,12 +8,13 @@ interface userData {
     username: "";
 }
 
-function Header() {
+function Header(prop: Start) {
     const navigate = useNavigate();
     const location = useLocation();
     const [user, setUser] = useState({ username: "" });
     const [userLoggedIn, setUserLoggedIn] = useState<boolean>();
     const [toggleNavigation, setToggleNavigation] = useState<boolean>(false);
+    let start = prop.state;
 
     async function isLoggedIn() {
         const token: string | null = sessionStorage.getItem("token");
@@ -48,6 +50,13 @@ function Header() {
         }
     }, [location.pathname]);
 
+    useEffect(() => {
+        if (userLoggedIn) {
+            navigate("/");
+            start.setStart(false);
+        }
+    }, [userLoggedIn]);
+
     async function logout() {
         let response = await fetch("http://localhost:5555/api/logout");
         let data: { success: boolean } = await response.json();
@@ -66,7 +75,7 @@ function Header() {
             </button>
             <nav className={toggleNavigation ? "main-nav" : "main-nav toggle-visibility"}>
                 <ul onClick={() => setToggleNavigation(!toggleNavigation)}>
-                    <li>
+                    <li onClick={() => start.setStart(false)}>
                         <Link to="/">Start</Link>
                     </li>
                     <li>
