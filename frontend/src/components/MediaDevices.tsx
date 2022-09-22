@@ -25,7 +25,7 @@ function MediaDevices() {
         const canvas = document.getElementById("canvas") as HTMLCanvasElement;
         const video = document.getElementById("video") as HTMLVideoElement;
         const context = canvas.getContext("2d");
-        context?.drawImage(video, 0, 0, 300, 250);
+        context?.drawImage(video, 0, 0, 340, 260);
         const image = canvas.toDataURL("image/jpeg");
         setSavedPhoto(image);
         setViewPhoto(true);
@@ -70,8 +70,8 @@ function MediaDevices() {
                 </button>
             </article>
             <canvas
-                width="300"
-                height="250"
+                width="340"
+                height="260"
                 id="canvas"
                 className={!viewPhoto ? "toggle-visibility" : ""}
             >
