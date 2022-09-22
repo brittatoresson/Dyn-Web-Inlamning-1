@@ -19,7 +19,7 @@ interface StateStart {
 export interface userData {
     _id?: string;
     email: string;
-    isAdmin: boolean;
+    isAdmin?: boolean;
     //   userdata: { _id: ""; username: "" };
     username: string;
 }

@@ -55,7 +55,7 @@ function GalleryPage() {
     }, []);
 
     return (
-        <section>
+        <main>
             <h1>Gallery</h1>
             <dialog id="delete-dialog">
                 <p>Are you sure you want to delete the photo?</p>
@@ -74,7 +74,7 @@ function GalleryPage() {
                     </div>
                 ))}
             </article>
-        </section>
+        </main>
     );
 }
 
