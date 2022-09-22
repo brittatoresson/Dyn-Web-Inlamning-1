@@ -1,8 +1,9 @@
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useState<Boolean>();
 
   async function login(event: any) {
     event.preventDefault();
@@ -19,6 +20,9 @@ function Login() {
       headers: { "Content-Type": "application/json" },
     });
     const data: { success: boolean; token: string } = await response.json();
+    setIsLogin(data.success);
+    console.log(isLogin);
+
     if (data.success) {
       sessionStorage.setItem("token", data.token);
       navigate("/profile");
@@ -28,12 +32,17 @@ function Login() {
 
   return (
     <form className="login-form" onSubmit={(e: any) => login(e)}>
+      <div className={isLogin === false ? "error-login" : "toggle"}>
+        Username or password is incorrect, please try again
+      </div>
+
       <input
         type="text"
         name="login-username"
         id="login-username"
         placeholder="username"
         required
+        onClick={() => setIsLogin(true)}
       />
       <input
         type="password"
