@@ -3,10 +3,10 @@ import Profile from "../components/Profile";
 
 function ProfilePage() {
     return (
-        <section>
+        <main>
             <h1>Profile</h1>
             <Profile />
-        </section>
+        </main>
     );
 }
 

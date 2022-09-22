@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Profile() {
-    const [photosArray, setPhotosArray] = useState([]);
+    const [photosArray, setPhotosArray] = useState<Array<object>>([]);
+    const [userlist, setUserlist] = useState<any>();
     const [user, setUser] = useState({
         userdata: { username: "", email: "", isAdmin: false, photoArray: [] },
     });
-    const admin = localStorage.getItem("isAdmin");
+
     const token: string | null = sessionStorage.getItem("token");
     let navigate = useNavigate();
 
@@ -30,17 +31,65 @@ function Profile() {
         setPhotosArray(await response.json());
     }
 
+    async function getUserlist() {
+        const response = await fetch("http://localhost:5555/api/userlist", {
+            method: "GET",
+            headers: { authorization: `user: ${user.userdata.username}` },
+        });
+        const data = await response.json();
+        setUserlist(data);
+    }
+
     useEffect(() => {
         getUserProfile();
         getPhotos();
     }, []);
 
+    useEffect(() => {
+        if (user.userdata.isAdmin) {
+            getUserlist();
+        }
+    }, [user]);
+
     return (
         <section id="profile">
-            <p>Username: {user.userdata.username}</p>
-            <p>Email: {user.userdata.email}</p>
-            {admin ? <p>Role: Admin</p> : <p>Role: Guest</p>}
-            <p onClick={() => navigate("/gallery")}>{photosArray.length} saved photos</p>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Username:</td>
+                        <td>{user.userdata.username}</td>
+                    </tr>
+                    <tr>
+                        <td>Email: </td>
+                        <td>{user.userdata.email}</td>
+                    </tr>
+                    <tr>
+                        <td>Role:</td>
+                        {user.userdata.isAdmin ? <td>Admin</td> : <td>Guest</td>}
+                    </tr>
+                    <tr onClick={() => navigate("/gallery")}>
+                        <td>Saved content:</td>
+                        <td>{photosArray.length} photos</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2 className={user.userdata.isAdmin ? "" : "toggle-visibility"}>Registrated users</h2>
+            <table className={user.userdata.isAdmin ? "" : "toggle-visibility"}>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {userlist?.map((user: any) => (
+                        <tr>
+                            <td>{user.username}</td>
+                            <td>{user.email}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </section>
     );
 }
