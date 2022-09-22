@@ -24,10 +24,8 @@ function Header(prop: Start) {
             userdata: userData;
         } = await response.json();
 
-        let id = data.userdata._id;
-
-        localStorage.setItem("user-id", JSON.stringify(id));
-        localStorage.setItem("isAdmin", JSON.stringify(data.userdata.username));
+        localStorage.setItem("user-id", JSON.stringify(data.userdata._id));
+        localStorage.setItem("isAdmin", JSON.stringify(data.userdata.isAdmin));
 
         setUser(data.userdata);
 

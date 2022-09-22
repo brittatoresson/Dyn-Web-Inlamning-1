@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import xMark from "../assets/xmark-solid.svg";
 
 function GalleryPage() {
+    const [selectedImage, setSelectedImage] = useState<any>({ userID: "", _id: "" });
     const [galleryImages, setGalleryImages] = useState<Array<object>>([
         { savedPhoto: "", userID: "", _id: "" },
     ]);
@@ -20,12 +21,21 @@ function GalleryPage() {
         setGalleryImages(await data);
     }
 
-    async function removeImage(image: { userID: ""; _id: "" }) {
-        console.log(image);
+    function showDeleteDialog(image: { userID: string; _id: string }) {
+        const deleteDialog = document.getElementById("delete-dialog") as HTMLDialogElement;
+        deleteDialog.showModal();
+        setSelectedImage({ userID: image.userID, _id: image._id });
+    }
 
+    function closeDeleteDialog() {
+        const deleteDialog = document.getElementById("delete-dialog") as HTMLDialogElement;
+        deleteDialog.close();
+    }
+
+    async function removeImage() {
         const sendData = {
-            userID: image.userID,
-            imageID: image._id,
+            userID: selectedImage.userID,
+            imageID: selectedImage._id,
         };
 
         const response = await fetch("http://localhost:5555/api/photodb", {
@@ -35,7 +45,9 @@ function GalleryPage() {
         });
         const data = await response.json();
         console.log(data);
+
         getGalleryImages();
+        closeDeleteDialog();
     }
 
     useEffect(() => {
@@ -45,6 +57,11 @@ function GalleryPage() {
     return (
         <section>
             <h1>Gallery</h1>
+            <dialog id="delete-dialog">
+                <p>Are you sure you want to delete the photo?</p>
+                <button onClick={() => removeImage()}>confirm</button>
+                <button onClick={() => closeDeleteDialog()}>cancel</button>
+            </dialog>
             <article className="gallery-grid">
                 {galleryImages.map((imgData: any, i: number) => (
                     <div className="gallery-img-box" key={i}>
@@ -52,7 +69,7 @@ function GalleryPage() {
                         <img
                             className="gallery-img-btn"
                             src={xMark}
-                            onClick={() => removeImage(imgData)}
+                            onClick={() => showDeleteDialog(imgData)}
                         />
                     </div>
                 ))}

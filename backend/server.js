@@ -96,6 +96,7 @@ app.get("/api/loggedin", async (req, res) => {
             resObj.userdata = {
                 username: userdataArr[0].username,
                 email: userdataArr[0].email,
+                isAdmin: userdataArr[0].isAdmin,
                 _id: userdataArr[0]._id,
             };
         }
@@ -127,7 +128,7 @@ app.get("/api/photodb", async (req, res) => {
 
     /// ADMIN ACCESS
     const adminUsersArray = await accountsDB.find({ isAdmin: true });
-    let findAdminUser = adminUsersArray.find((id) => id._id === userID);
+    let findAdminUser = adminUsersArray.find((user) => user._id === userID);
     findAdminUser ? (userPhotos = await photosDB.find({})) : null;
     res.json(userPhotos);
 });

@@ -11,6 +11,10 @@ a {
     color: #fff;
 }
 
+h1 {
+    margin: 0.5em 0;
+}
+
 input {
     padding: 0.5em;
 }
@@ -24,6 +28,8 @@ input[type="submit"] {
     font-weight: 700;
     font-size: 1rem;
     text-transform: uppercase;
+
+    transition: all 200ms ease-in-out;
 }
 
 button:hover,
@@ -33,6 +39,20 @@ input[type="submit"]:focus {
     background-color: var(--bg-color);
     color: #fff;
     border: solid 1px #fff;
+}
+
+dialog button {
+    margin: 0 0.5em;
+}
+
+dialog {
+    border-radius: 4px;
+    border: none;
+    z-index: 5;
+}
+
+dialog::backdrop {
+    background: hsla(0, 0%, 0%, 0.5);
 }
 
 #start-page img {
@@ -45,7 +65,7 @@ input[type="submit"]:focus {
 
 header {
     max-width: 100%;
-    min-height: 4.5rem;
+    min-height: 4rem;
 }
 
 .header-btn {
@@ -53,7 +73,7 @@ header {
     z-index: 20;
     right: 1em;
     top: 1em;
-    transition: transform 500ms;
+    transition: transform 300ms ease-in-out;
 }
 
 .header-btn:hover,
@@ -115,10 +135,6 @@ video {
     margin: 0 auto;
 }
 
-.toggleVideo {
-    display: none;
-}
-
 video,
 canvas {
     display: block;
@@ -167,7 +183,13 @@ canvas {
     border: 2px solid var(--bg-color);
     background-color: #fff;
 
+    opacity: 0.5;
     cursor: pointer;
+}
+
+.gallery-img-btn:hover,
+.gallery-img-btn:focus {
+    opacity: 1;
 }
 
 @media screen and (min-width: 680px) {
@@ -181,4 +203,8 @@ canvas {
         grid-template-columns: 1fr 1fr 1fr 1fr;
         margin: 0 auto;
     }
+}
+
+.delete-dialog {
+    z-index: 5;
 }

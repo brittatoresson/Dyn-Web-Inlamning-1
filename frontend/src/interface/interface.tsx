@@ -17,7 +17,9 @@ interface StateStart {
 }
 
 export interface userData {
-  _id?: "";
-  userdata: { _id: ""; username: "" };
-  username: "";
+    _id?: string;
+    email: string;
+    isAdmin: boolean;
+    //   userdata: { _id: ""; username: "" };
+    username: string;
 }
