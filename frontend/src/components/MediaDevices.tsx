@@ -4,11 +4,8 @@ import { useState, useEffect, ChangeEvent } from "react";
 function MediaDevices() {
     const [savedPhoto, setSavedPhoto] = useState<any>();
     const [viewPhoto, setViewPhoto] = useState<boolean>(false);
-
-    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-
-    const filterArray = ["grayscale(100%)", "hue-rotate(90deg)", "low_fi", "old"];
     const [filter, setFilter] = useState("");
+    const filterArray = ["grayscale(100%)", "blur", "low_fi", "sepia", "contrast"];
 
     function startCamera() {
         const video = document.getElementById("video") as HTMLVideoElement;
@@ -60,14 +57,6 @@ function MediaDevices() {
         }
     }, [savedPhoto]);
 
-    //   function clearphoto() {
-    //     const context: CanvasRenderingContext2D | null = canvas.getContext("2d");
-    //     if (context) {
-    //       context.fillStyle = "#FFF";
-    //       context.fillRect(0, 0, canvas.width, canvas.height);
-    //     }
-    //   }
-
     return (
         <section>
             <article className={viewPhoto ? "toggle-visibility" : "vid-margin"}>
@@ -78,12 +67,14 @@ function MediaDevices() {
                     className={
                         filter === "grayscale(100%)"
                             ? "gray"
-                            : filter === "hue-rotate(90deg)"
-                            ? "hue"
-                            : filter === "old"
-                            ? "old"
+                            : filter === "blur"
+                            ? "blur"
+                            : filter === "sepia"
+                            ? "sepia"
                             : filter === "low_fi"
                             ? "low_fi"
+                            : filter === "contrast"
+                            ? "contrast"
                             : ""
                     }
                 ></video>
@@ -91,34 +82,38 @@ function MediaDevices() {
                     Take photo
                 </button>
             </article>
-            <canvas
-                width="340"
-                height="260"
-                id="canvas"
-                className={!viewPhoto ? "toggle-visibility" : ""}
-            >
-                <img id="photo" />
-            </canvas>
+            <section id="frame" className={!viewPhoto ? "toggle-visibility" : ""}>
+                <canvas
+                    width="340"
+                    height="260"
+                    id="canvas"
+                    className={!viewPhoto ? "toggle-visibility" : ""}
+                >
+                    <img id="photo" />
+                </canvas>
+            </section>
             <button
                 className={!viewPhoto ? "toggle-visibility" : ""}
                 onClick={() => {
                     setViewPhoto(false);
-                    //   clearphoto();
                 }}
             >
                 Fånga ett nytt ögonblick
             </button>
-
-            <select
-                id="filter"
-                onChange={(e: ChangeEvent<HTMLSelectElement>) => setFilter(e.target.value)}
-            >
-                <option value=""> </option>
-                <option value="grayscale(100%)"> Grey </option>
-                <option value="hue-rotate(90deg)"> Hue </option>
-                <option value="low_fi"> Low-fi </option>
-                <option value="old"> Old </option>
-            </select>
+            <section className={viewPhoto ? "toggle-visibility" : "filter"}>
+                <label htmlFor="filter"> Add filter</label>
+                <select
+                    id="filter"
+                    onChange={(e: ChangeEvent<HTMLSelectElement>) => setFilter(e.target.value)}
+                >
+                    <option value=""> </option>
+                    <option value="grayscale(100%)"> Grey </option>
+                    <option value="blur"> Blur </option>
+                    <option value="low_fi"> Low-fi </option>
+                    <option value="sepia"> Sepia </option>
+                    <option value="contrast"> Contrast </option>
+                </select>
+            </section>
         </section>
     );
 }
