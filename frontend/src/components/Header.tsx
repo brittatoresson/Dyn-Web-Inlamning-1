@@ -85,7 +85,7 @@ function Header(prop: Start) {
                         <Link to="/gallery">Gallery</Link>
                     </li>
                 </ul>
-                {userLoggedIn ? <p> Account: {user.username}</p> : null}
+                {userLoggedIn ? <p> Logged in as: {user.username}</p> : null}
                 {userLoggedIn ? <button onClick={() => logout()}>Log out</button> : <span></span>}
             </nav>
         </header>
