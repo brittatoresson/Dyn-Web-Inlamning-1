@@ -150,19 +150,11 @@ app.delete("/api/photodb", async (req, res) => {
 });
 
 app.get("/api/userlist", async (req, res) => {
-    // const username = req.headers.authorization?.replace("user: ", "");
-    // const adminUsersArray = await accountsDB.find({ isAdmin: true });
-    // let findAdminUser = adminUsersArray.find((user) => user.username === username);
-
-    // if (findAdminUser !== undefined) {
     let allUsers = await accountsDB.find({});
     allUsers = allUsers.map((user) => {
         return { username: user.username, email: user.email };
     });
     res.json(allUsers);
-    // } else {
-    //     res.json("something went wrong!");
-    // }
 });
 
 app.listen(PORT, () => {

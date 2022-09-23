@@ -68,6 +68,9 @@ dialog::backdrop {
     background: hsla(0, 0%, 0%, 0.5);
 }
 
+dialog img {
+    width: 100%;
+}
 .App {
     text-align: center;
 }

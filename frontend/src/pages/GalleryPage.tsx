@@ -2,10 +2,42 @@ import { useEffect, useState } from "react";
 import xMark from "../assets/xmark-solid.svg";
 
 function GalleryPage() {
-    const [selectedImage, setSelectedImage] = useState<any>({ userID: "", _id: "" });
-    const [galleryImages, setGalleryImages] = useState<Array<object>>([
+    const [selectedImage, setSelectedImage] = useState<imageData>({
+        savedPhoto: "",
+        userID: "",
+        _id: "",
+    });
+    const [galleryImages, setGalleryImages] = useState<Array<imageData>>([
         { savedPhoto: "", userID: "", _id: "" },
     ]);
+
+    interface imageData {
+        savedPhoto: string;
+        userID: string;
+        _id: string;
+    }
+
+    function showInfoDialog(image: imageData) {
+        const infoDialog = document.getElementById("info-dialog") as HTMLDialogElement;
+        infoDialog.showModal();
+        setSelectedImage({ savedPhoto: image.savedPhoto, userID: image.userID, _id: image._id });
+    }
+
+    function closeInfoDialog() {
+        const infoDialog = document.getElementById("info-dialog") as HTMLDialogElement;
+        infoDialog.close();
+    }
+
+    function showDeleteDialog(image: imageData) {
+        const deleteDialog = document.getElementById("delete-dialog") as HTMLDialogElement;
+        deleteDialog.showModal();
+        setSelectedImage({ savedPhoto: image.savedPhoto, userID: image.userID, _id: image._id });
+    }
+
+    function closeDeleteDialog() {
+        const deleteDialog = document.getElementById("delete-dialog") as HTMLDialogElement;
+        deleteDialog.close();
+    }
 
     async function getGalleryImages() {
         let userID: string | undefined | null = localStorage.getItem("user-id");
@@ -18,18 +50,8 @@ function GalleryPage() {
             },
         });
         const data = await response.json();
+        console.log(data);
         setGalleryImages(await data);
-    }
-
-    function showDeleteDialog(image: { userID: string; _id: string }) {
-        const deleteDialog = document.getElementById("delete-dialog") as HTMLDialogElement;
-        deleteDialog.showModal();
-        setSelectedImage({ userID: image.userID, _id: image._id });
-    }
-
-    function closeDeleteDialog() {
-        const deleteDialog = document.getElementById("delete-dialog") as HTMLDialogElement;
-        deleteDialog.close();
     }
 
     async function removeImage() {
@@ -62,10 +84,19 @@ function GalleryPage() {
                 <button onClick={() => removeImage()}>confirm</button>
                 <button onClick={() => closeDeleteDialog()}>cancel</button>
             </dialog>
+            <dialog id="info-dialog">
+                <img src={selectedImage.savedPhoto} alt="" />
+                <button onClick={() => closeInfoDialog()}>back</button>
+            </dialog>
             <article className="gallery-grid">
-                {galleryImages.map((imgData: any, i: number) => (
+                {galleryImages.map((imgData, i: number) => (
                     <div className="gallery-img-box" key={i}>
-                        <img className="gallery-img" src={imgData.savedPhoto} alt="webcam" />
+                        <img
+                            className="gallery-img"
+                            src={imgData.savedPhoto}
+                            alt=""
+                            onClick={() => showInfoDialog(imgData)}
+                        />
                         <img
                             className="gallery-img-btn"
                             src={xMark}
