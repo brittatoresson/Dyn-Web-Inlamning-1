@@ -271,3 +271,6 @@ canvas {
 .delete-dialog {
   z-index: 5;
 }
+.info-dialog {
+  z-index: 5;
+}
