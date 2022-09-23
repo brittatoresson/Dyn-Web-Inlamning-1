@@ -164,17 +164,49 @@ canvas {
   margin: 1em auto;
 }
 
+/* FRAMES, oklart om detta ska vara med */
+/* canvas { */
+/* border: 20px solid transparent;
+  padding: 15px;
+  border-image: url(https://www.gardendesign.com/pictures/images/675x529Max/site_3/helianthus-yellow-flower-pixabay_11863.jpg)
+    30 round; */
+/* padding: 15px; */
+/* border: 30px solid transparent;
+  border-image: url(https://images.all-free-download.com/images/graphiclarge/flower_frame_310303.jpg);
+  border-image-slice: 50;
+  border-image-outset: 0.2;
+  background-color: white; */
+/* } */
+
+/* FILTER */
+.filter {
+  display: flex;
+  flex-direction: column;
+  padding: 1em 1.5em;
+}
+.filter select {
+  width: 10vw;
+  align-self: center;
+  padding: 0;
+}
+.filter select:focus {
+  outline: 0;
+}
+
 .gray {
   filter: grayscale(100%);
 }
-.hue {
-  filter: hue-rotate(90deg);
+.blur {
+  filter: blur(5px);
 }
-.old {
-  filter: grayscale(1) sepia(0.5) brightness(1.3) invert(0.8);
+.sepia {
+  filter: sepia(1);
 }
 .low_fi {
-  filter: saturate(1.1) contrast(1.5);
+  filter: saturate(1.2) contrast(2);
+}
+.contrast {
+  filter: contrast(3);
 }
 
 .toggle-visibility {
