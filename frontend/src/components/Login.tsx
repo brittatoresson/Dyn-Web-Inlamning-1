@@ -32,7 +32,7 @@ function Login() {
 
     return (
         <form className="login-form" onSubmit={(e: any) => login(e)}>
-            <div className={!isLogin ? "error-msg" : "toggle-visibility"}>
+            <div className={isLogin === false ? "error-msg" : "toggle-visibility"}>
                 Username or password is incorrect, please try again
             </div>
             <input

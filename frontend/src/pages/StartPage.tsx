@@ -8,8 +8,10 @@ function StartPage(prop: Start) {
 
     return (
         <main id="start-page">
-            {start.start === false ? (
-                <img src={logo} alt="" onClick={() => start.setStart(true)} />
+            {!start.start ? (
+                <div className="logo">
+                    <img src={logo} alt="" onClick={() => start.setStart(true)} />
+                </div>
             ) : (
                 <MediaDevices />
             )}
