@@ -1,6 +1,5 @@
 import filterFunction from "./Filter";
 import { useState, useEffect, ChangeEvent } from "react";
-import { time } from "console";
 
 function MediaDevices() {
   const [savedPhoto, setSavedPhoto] = useState<any>();
@@ -82,7 +81,7 @@ function MediaDevices() {
 
   return (
     <section>
-      <article className={viewPhoto ? "toggle-visibility" : ""}>
+      <article className={viewPhoto ? "toggle-visibility" : "vid-margin"}>
         <video
           width="750"
           height="500"

@@ -4,4 +4,3 @@
 {"username":"admin","password":"$2a$10$iBC8u8yYnW52W0Qic/4lwOWJ/h3KeMg/W5KwkryvrCRFlviLawL9y","email":"admin@admin.org","isAdmin":true,"_id":"LJaYdvLUM9xPpDn9"}
 {"username":"hejhej","password":"$2a$10$9.1iOGF0cYGv3tpwwGc5c.ukdbzTMM9M8h17sQvao4nv2oQc5q0DW","email":"hej@hej.com","isAdmin":false,"_id":"P2A5aTsMSrrq6gFV"}
 {"username":"brito","password":"$2a$10$KKP1x26nYYNPn8w.VBAlTO3CIPOF2krNqDWS/iD.uQKeYXgqnD5Va","email":"brito@post.brev","isAdmin":false,"_id":"m1FYwZxJICns1NHa"}
-{"username":"","password":"$2a$10$5H2MU4lxqHY7IhIZXEDYYOrFwiPk7oNFKwlDwgaqEZx9/TaIQIZlG","email":"","isAdmin":false,"_id":"mykFoCQGFfXsUhks"}

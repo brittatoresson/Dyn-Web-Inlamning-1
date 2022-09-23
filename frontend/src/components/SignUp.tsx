@@ -25,7 +25,7 @@ function SignUp() {
     }
 
     async function createAccount(account: Account) {
-        if (account.username !== "" && account.password !== "") {
+        if (account.username !== "" && account.password !== "" && account.email !== "") {
             const response = await fetch("http://localhost:5555/api/signup", {
                 method: "POST",
                 body: JSON.stringify(account),
@@ -42,7 +42,7 @@ function SignUp() {
                 : setSignUpMsg("Account already exists");
             data.success ? setDisplayWarning(false) : setDisplayWarning(true);
         } else {
-            setSignUpMsg("Please enter username and password.");
+            setSignUpMsg("Please enter username, email and password.");
             setDisplayWarning(true);
         }
     }
