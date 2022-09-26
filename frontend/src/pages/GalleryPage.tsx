@@ -53,7 +53,6 @@ function GalleryPage() {
         console.log(data);
         setGalleryImages(await data);
     }
-  }
 
     async function removeImage() {
         const sendData = {
