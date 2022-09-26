@@ -88,7 +88,9 @@ function Header(prop: Start) {
                         <Link to="/public-gallery">Public Gallery</Link>
                     </li>
                 </ul>
-                {userLoggedIn ? <p> Logged in as: {user.username}</p> : null}
+                {userLoggedIn ? (
+                    <span className="username-info-field">Logged in: {user.username}</span>
+                ) : null}
                 {userLoggedIn ? <button onClick={() => logout()}>Log out</button> : <span></span>}
             </nav>
         </header>
