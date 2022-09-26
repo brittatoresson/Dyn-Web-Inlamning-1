@@ -19,6 +19,7 @@ function GalleryPage() {
       "info-dialog"
     ) as HTMLDialogElement;
     infoDialog.showModal();
+
     setSelectedImage({
       savedPhoto: image.savedPhoto,
       userID: image.userID,
@@ -66,15 +67,21 @@ function GalleryPage() {
       },
     });
     const data = await response.json();
-    console.log(data);
 
     setGalleryImages(await data);
   }
+  async function removeImage(removeCaption: boolean | null) {
+    if (removeCaption === true) {
+      setSelectedImage({
+        ...selectedImage,
+        caption: "",
+      });
+    }
 
-  async function removeImage() {
     const sendData = {
       userID: selectedImage.userID,
       imageID: selectedImage._id,
+      removeCaption: removeCaption,
     };
 
     const response = await fetch("http://localhost:5555/api/photodb", {
@@ -83,13 +90,11 @@ function GalleryPage() {
       headers: { "Content-Type": "application/json" },
     });
     const data = await response.json();
-    getGalleryImages();
     closeDeleteDialog();
-  }
-
-  useEffect(() => {
+    removeCaption = false;
+    setCaption(undefined);
     getGalleryImages();
-  }, []);
+  }
 
   async function getPhotoInfo() {
     let userID = {
@@ -108,24 +113,41 @@ function GalleryPage() {
   function addCaption(e: any) {
     if (e.keyCode == 13) {
       setCaption(e.target.value);
+      setSelectedImage({
+        ...selectedImage,
+        caption: e.target.value,
+      });
+      getPhotoInfo();
     }
   }
+
+  useEffect(() => {
+    getGalleryImages();
+  }, []);
+
   useEffect(() => {
     getPhotoInfo();
-  }, [selectedImage, caption]);
+    getGalleryImages();
+  }, [selectedImage]);
 
   return (
     <main>
       <h1>Gallery</h1>
       <dialog id="delete-dialog">
         <p>Are you sure you want to delete the photo?</p>
-        <button onClick={() => removeImage()}>confirm</button>
+        <button onClick={() => removeImage(null)}>confirm</button>
         <button onClick={() => closeDeleteDialog()}>cancel</button>
       </dialog>
       <dialog id="info-dialog">
         <img src={selectedImage.savedPhoto} alt="" />
         <p>Photo by {imageInfo.username}</p>
-        <p> {selectedImage.caption}</p>
+
+        {selectedImage.caption ? (
+          <div className="caption">
+            <p> {selectedImage.caption}</p>
+            <img onClick={() => removeImage(true)} src={xMark}></img>
+          </div>
+        ) : null}
         <p>
           {selectedImage.dateObj?.date}, kl. {selectedImage.dateObj?.time}
         </p>
