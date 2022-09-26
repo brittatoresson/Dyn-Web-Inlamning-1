@@ -11,7 +11,24 @@ a {
     color: #fff;
 }
 
+h1 {
+    margin: 0.5em 0;
+}
+
 input {
+    padding: 0.5em;
+}
+
+table {
+    text-align: left;
+    margin: 1em auto;
+    background-color: #343637;
+    border-radius: 4px;
+    width: 300px;
+}
+
+td,
+th {
     padding: 0.5em;
 }
 
@@ -24,6 +41,8 @@ input[type="submit"] {
     font-weight: 700;
     font-size: 1rem;
     text-transform: uppercase;
+
+    transition: all 200ms ease-in-out;
 }
 
 button:hover,
@@ -35,8 +54,26 @@ input[type="submit"]:focus {
     border: solid 1px #fff;
 }
 
-#start-page img {
-    max-width: 100vw;
+dialog button {
+    margin: 0 0.5em;
+}
+
+dialog {
+    border-radius: 4px;
+    border: none;
+    z-index: 5;
+}
+
+dialog::backdrop {
+    background: hsla(0, 0%, 0%, 0.5);
+}
+
+dialog img {
+    width: 100%;
+}
+
+.clickable {
+    cursor: pointer;
 }
 
 .App {
@@ -45,7 +82,7 @@ input[type="submit"]:focus {
 
 header {
     max-width: 100%;
-    min-height: 4.5rem;
+    min-height: 4rem;
 }
 
 .header-btn {
@@ -53,7 +90,7 @@ header {
     z-index: 20;
     right: 1em;
     top: 1em;
-    transition: transform 500ms;
+    transition: transform 300ms ease-in-out;
 }
 
 .header-btn:hover,
@@ -85,7 +122,7 @@ header {
     margin: 0;
     gap: 1em;
 
-    font-size: 3rem;
+    font-size: 2.5rem;
 }
 
 .main-nav a {
@@ -99,6 +136,18 @@ header {
     text-decoration: underline;
 }
 
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+}
+
+.logo img {
+    max-width: 100vw;
+    max-height: 80vh;
+}
+
 #sign-up,
 .login-form {
     display: flex;
@@ -109,14 +158,15 @@ header {
     max-width: 340px;
 }
 
+.error-msg {
+    background-color: rgba(255, 147, 147, 0.541);
+    padding: 1rem;
+}
+
 video {
     display: block;
     max-width: 100%;
     margin: 0 auto;
-}
-
-.toggleVideo {
-    display: none;
 }
 
 video,
@@ -124,6 +174,55 @@ canvas {
     display: block;
     max-width: 100%;
     margin: 1em auto;
+}
+
+.vid-margin {
+    margin: 1em;
+}
+
+/* FRAMES, oklart om detta ska vara med */
+/* canvas { */
+/* border: 20px solid transparent;
+  padding: 15px;
+  border-image: url(https://www.gardendesign.com/pictures/images/675x529Max/site_3/helianthus-yellow-flower-pixabay_11863.jpg)
+    30 round; */
+/* padding: 15px; */
+/* border: 30px solid transparent;
+  border-image: url(https://images.all-free-download.com/images/graphiclarge/flower_frame_310303.jpg);
+  border-image-slice: 50;
+  border-image-outset: 0.2;
+  background-color: white; */
+/* } */
+
+/* FILTER */
+.filter {
+    display: flex;
+    flex-direction: column;
+    padding: 1em 1.5em;
+}
+.filter select {
+    width: 10vw;
+    align-self: center;
+    padding: 0;
+}
+.filter select:focus {
+    outline: 0;
+}
+
+.gray {
+    filter: grayscale(100%);
+}
+.blur {
+    filter: blur(5px);
+}
+.sepia {
+    filter: sepia(1);
+}
+.low_fi {
+    filter: saturate(1.2) contrast(2);
+}
+.contrast {
+    filter: contrast(3);
 }
 
 .toggle-visibility {
@@ -167,7 +266,35 @@ canvas {
     border: 2px solid var(--bg-color);
     background-color: #fff;
 
+    opacity: 0.5;
     cursor: pointer;
+}
+
+.gallery-img-btn:hover,
+.gallery-img-btn:focus {
+    opacity: 1;
+}
+
+.caption {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.caption p {
+    margin: 0.5em;
+}
+.caption img {
+    width: 1em;
+    height: 1em;
+    cursor: pointer;
+}
+
+.dialog-share-field {
+    margin: 1em;
+}
+
+.share-btn {
+    padding: 0.35em 0.5em;
 }
 
 @media screen and (min-width: 680px) {
@@ -181,4 +308,11 @@ canvas {
         grid-template-columns: 1fr 1fr 1fr 1fr;
         margin: 0 auto;
     }
+}
+
+.delete-dialog {
+    z-index: 5;
+}
+.info-dialog {
+    z-index: 5;
 }

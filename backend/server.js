@@ -96,6 +96,7 @@ app.get("/api/loggedin", async (req, res) => {
             resObj.userdata = {
                 username: userdataArr[0].username,
                 email: userdataArr[0].email,
+                isAdmin: userdataArr[0].isAdmin,
                 _id: userdataArr[0]._id,
             };
         }
@@ -113,11 +114,9 @@ app.get("/api/logout", async (request, response) => {
     response.json(resObj);
 });
 
-app.post("/api/photodb", async (req, res) => {
-    const photoObj = req.body;
-    if (photoObj) {
-        photosDB.insert(photoObj);
-    }
+app.get("/api/photodb/public", async (req, res) => {
+    const userPhotos = await photosDB.find({ isPublic: true });
+    res.json(userPhotos);
 });
 
 app.get("/api/photodb", async (req, res) => {
@@ -127,23 +126,70 @@ app.get("/api/photodb", async (req, res) => {
 
     /// ADMIN ACCESS
     const adminUsersArray = await accountsDB.find({ isAdmin: true });
-    let findAdminUser = adminUsersArray.find((id) => id._id === userID);
+    let findAdminUser = adminUsersArray.find((user) => user._id === userID);
     findAdminUser ? (userPhotos = await photosDB.find({})) : null;
     res.json(userPhotos);
+});
+
+app.post("/api/photodb", async (req, res) => {
+    const photoObj = req.body;
+    if (photoObj) {
+        photosDB.insert(photoObj);
+    }
+});
+
+app.put("/api/photodb", async (req, res) => {
+    const imageData = req.body;
+
+    console.log(imageData);
+    await photosDB.update({ _id: imageData.imageID }, { $set: { isPublic: imageData.isPublic } });
+    res.json("switched");
 });
 
 app.delete("/api/photodb", async (req, res) => {
     const imageData = req.body;
     const resObj = {
         imageRemoved: false,
+        captionRemoved: false,
     };
 
     let photo = await photosDB.find({ _id: imageData.imageID });
 
-    if (photo.length > 0) {
+    if (photo.length > 0 && imageData.removeCaption !== true) {
         resObj.imageRemoved = true;
         photosDB.remove({ _id: imageData.imageID });
+    } else if (photo.length > 0 && imageData.removeCaption === true) {
+        photosDB.update({ _id: imageData.imageID }, { $set: { caption: "" } });
+        resObj.captionRemoved = true;
     }
+
+    res.json(resObj);
+});
+
+app.get("/api/userlist", async (req, res) => {
+    let allUsers = await accountsDB.find({});
+    allUsers = allUsers.map((user) => {
+        return { username: user.username, email: user.email };
+    });
+    res.json(allUsers);
+});
+
+app.post("/api/photoInfo", async (req, res) => {
+    const userID = req.body.userID;
+    const _id = req.body._id;
+    const caption = req.body.caption;
+
+    const resObj = {
+        username: "",
+        caption: caption,
+    };
+
+    let users = await accountsDB.find({ _id: userID });
+    users.map((user) => {
+        resObj.username = user.username;
+    });
+
+    caption ? photosDB.update({ _id: _id }, { $set: { caption: caption } }) : null;
 
     res.json(resObj);
 });

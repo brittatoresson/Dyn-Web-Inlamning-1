@@ -24,10 +24,8 @@ function Header(prop: Start) {
             userdata: userData;
         } = await response.json();
 
-        let id = data.userdata._id;
-
-        localStorage.setItem("user-id", JSON.stringify(id));
-        localStorage.setItem("isAdmin", JSON.stringify(data.userdata.username));
+        localStorage.setItem("user-id", JSON.stringify(data.userdata._id));
+        localStorage.setItem("isAdmin", JSON.stringify(data.userdata.isAdmin));
 
         setUser(data.userdata);
 
@@ -84,10 +82,13 @@ function Header(prop: Start) {
                         <Link to="/profile">Profile</Link>
                     </li>
                     <li>
-                        <Link to="/gallery">Gallery</Link>
+                        <Link to="/gallery">Your Gallery</Link>
+                    </li>
+                    <li>
+                        <Link to="/public-gallery">Public Gallery</Link>
                     </li>
                 </ul>
-                {userLoggedIn ? <p> Account: {user.username}</p> : null}
+                {userLoggedIn ? <p> Logged in as: {user.username}</p> : null}
                 {userLoggedIn ? <button onClick={() => logout()}>Log out</button> : <span></span>}
             </nav>
         </header>

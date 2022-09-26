@@ -16,7 +16,8 @@ function SignUp() {
     };
     const [account, setAccount] = useState<Account>(credentials);
     const [adminBtnChecked, setAdminBtnChecked] = useState<boolean>(false);
-    const [response, setResponse] = useState<boolean>();
+    const [displayWarning, setDisplayWarning] = useState<boolean>(false);
+    const [signUpMsg, setSignUpMsg] = useState<string>("Create an account");
 
     function handleChange(e: handleInput) {
         setAccount({ ...account, [e.target.name]: e.target.value });
@@ -24,17 +25,26 @@ function SignUp() {
     }
 
     async function createAccount(account: Account) {
-        const response = await fetch("http://localhost:5555/api/signup", {
-            method: "POST",
-            body: JSON.stringify(account),
-            headers: { "Content-Type": "application/json" },
-        });
-        const data: {
-            success: boolean;
-            usernameExists: boolean;
-            emailExists: boolean;
-        } = await response.json();
-        setResponse(await data.success);
+        if (account.username !== "" && account.password !== "" && account.email !== "") {
+            const response = await fetch("http://localhost:5555/api/signup", {
+                method: "POST",
+                body: JSON.stringify(account),
+                headers: { "Content-Type": "application/json" },
+            });
+            const data: {
+                success: boolean;
+                usernameExists: boolean;
+                emailExists: boolean;
+            } = await response.json();
+
+            data.success
+                ? setSignUpMsg("You created a new account")
+                : setSignUpMsg("Account already exists");
+            data.success ? setDisplayWarning(false) : setDisplayWarning(true);
+        } else {
+            setSignUpMsg("Please enter username, email and password.");
+            setDisplayWarning(true);
+        }
     }
 
     useEffect(() => {
@@ -43,13 +53,9 @@ function SignUp() {
 
     return (
         <div id="sign-up">
-            {response === false ? (
-                <p>Account already exists</p>
-            ) : response === true ? (
-                <p>You created a new account</p>
-            ) : (
-                <p>Add username and password to create an account</p>
-            )}
+            <div className={displayWarning ? "error-msg" : ""}>
+                <p>{signUpMsg}</p>
+            </div>
             <input
                 type="text"
                 placeholder="username"
@@ -61,6 +67,7 @@ function SignUp() {
                 type="email"
                 placeholder="email"
                 name="email"
+                pattern="/(^$|^.*@.*\..*$)/"
                 value={account?.email}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)}
             />

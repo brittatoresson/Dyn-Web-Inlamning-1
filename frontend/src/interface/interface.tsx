@@ -17,7 +17,16 @@ interface StateStart {
 }
 
 export interface userData {
-  _id?: "";
-  userdata: { _id: ""; username: "" };
-  username: "";
+    _id?: string;
+    email: string;
+    isAdmin?: boolean;
+    username: string;
+}
+export interface imageData {
+    savedPhoto: string;
+    userID: string;
+    _id: string;
+    isPublic?: boolean;
+    dateObj?: { date: ""; time: "" };
+    caption?: "";
 }
