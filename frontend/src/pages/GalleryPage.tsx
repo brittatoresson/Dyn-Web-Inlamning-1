@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import xMark from "../assets/xmark-solid.svg";
+import { imageData } from "../interface/interface";
 
 function GalleryPage() {
     const [selectedImage, setSelectedImage] = useState<imageData>({
@@ -10,28 +11,35 @@ function GalleryPage() {
     const [galleryImages, setGalleryImages] = useState<Array<imageData>>([
         { savedPhoto: "", userID: "", _id: "" },
     ]);
-
-    interface imageData {
-        savedPhoto: string;
-        userID: string;
-        _id: string;
-    }
+    const [caption, setCaption] = useState();
+    const [imageInfo, setImageInfo] = useState({ username: "", caption: "" });
 
     function showInfoDialog(image: imageData) {
         const infoDialog = document.getElementById("info-dialog") as HTMLDialogElement;
         infoDialog.showModal();
-        setSelectedImage({ savedPhoto: image.savedPhoto, userID: image.userID, _id: image._id });
+        setSelectedImage({
+            savedPhoto: image.savedPhoto,
+            userID: image.userID,
+            _id: image._id,
+            dateObj: image.dateObj,
+            caption: image.caption,
+        });
     }
 
     function closeInfoDialog() {
         const infoDialog = document.getElementById("info-dialog") as HTMLDialogElement;
+
         infoDialog.close();
     }
 
     function showDeleteDialog(image: imageData) {
         const deleteDialog = document.getElementById("delete-dialog") as HTMLDialogElement;
         deleteDialog.showModal();
-        setSelectedImage({ savedPhoto: image.savedPhoto, userID: image.userID, _id: image._id });
+        setSelectedImage({
+            savedPhoto: image.savedPhoto,
+            userID: image.userID,
+            _id: image._id,
+        });
     }
 
     function closeDeleteDialog() {
@@ -51,6 +59,7 @@ function GalleryPage() {
         });
         const data = await response.json();
         console.log(data);
+
         setGalleryImages(await data);
     }
 
@@ -66,8 +75,6 @@ function GalleryPage() {
             headers: { "Content-Type": "application/json" },
         });
         const data = await response.json();
-        console.log(data);
-
         getGalleryImages();
         closeDeleteDialog();
     }
@@ -75,6 +82,29 @@ function GalleryPage() {
     useEffect(() => {
         getGalleryImages();
     }, []);
+
+    async function getPhotoInfo() {
+        let userID = {
+            userID: selectedImage.userID,
+            _id: selectedImage._id,
+            caption: caption,
+        };
+        const response = await fetch("http://localhost:5555/api/photoInfo", {
+            method: "POST",
+            body: JSON.stringify(userID),
+            headers: { "Content-Type": "application/json" },
+        });
+        setImageInfo(await response.json());
+    }
+
+    function addCaption(e: any) {
+        if (e.keyCode == 13) {
+            setCaption(e.target.value);
+        }
+    }
+    useEffect(() => {
+        getPhotoInfo();
+    }, [selectedImage, caption]);
 
     return (
         <main>
@@ -86,6 +116,14 @@ function GalleryPage() {
             </dialog>
             <dialog id="info-dialog">
                 <img src={selectedImage.savedPhoto} alt="" />
+                <p>Photo by {imageInfo.username}</p>
+                <p> {selectedImage.caption}</p>
+                <p>
+                    {selectedImage.dateObj?.date}, kl. {selectedImage.dateObj?.time}
+                </p>
+                {!selectedImage.caption ? (
+                    <input type="text" placeholder="add caption" onKeyDown={(e) => addCaption(e)} />
+                ) : null}
                 <button onClick={() => closeInfoDialog()}>back</button>
             </dialog>
             <article className="gallery-grid">
