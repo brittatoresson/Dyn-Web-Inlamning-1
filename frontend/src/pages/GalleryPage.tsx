@@ -27,7 +27,11 @@ function GalleryPage() {
       dateObj: image.dateObj,
       caption: image.caption,
     });
-  }
+    const [galleryImages, setGalleryImages] = useState<Array<imageData>>([
+        { savedPhoto: "", userID: "", _id: "" },
+    ]);
+    const [caption, setCaption] = useState();
+    const [imageInfo, setImageInfo] = useState({ username: "", caption: "" });
 
   function closeInfoDialog() {
     const infoDialog = document.getElementById(
