@@ -1,8 +1,8 @@
 export interface Account {
     username: string;
-    password: string | number;
+    password?: string | number;
     email: string;
-    isAdmin: boolean;
+    isAdmin?: boolean;
 }
 export interface handleInput {
     target: { value: string; name: string };

@@ -114,11 +114,13 @@ app.get("/api/logout", async (request, response) => {
     response.json(resObj);
 });
 
+//GET PUBLIC PHOTOS
 app.get("/api/photodb/public", async (req, res) => {
     const userPhotos = await photosDB.find({ isPublic: true });
     res.json(userPhotos);
 });
 
+// GET USER PHOTOS
 app.get("/api/photodb", async (req, res) => {
     const user = req.headers.authorization;
     const userID = user.replace("user-id: ", "");
@@ -131,6 +133,7 @@ app.get("/api/photodb", async (req, res) => {
     res.json(userPhotos);
 });
 
+//ADD NEW PHOTO
 app.post("/api/photodb", async (req, res) => {
     const photoObj = req.body;
     if (photoObj) {
@@ -146,6 +149,7 @@ app.put("/api/photodb", async (req, res) => {
     res.json("switched");
 });
 
+//DELETE SELECTED PHOTO
 app.delete("/api/photodb", async (req, res) => {
     const imageData = req.body;
     const resObj = {
@@ -162,10 +166,10 @@ app.delete("/api/photodb", async (req, res) => {
         photosDB.update({ _id: imageData.imageID }, { $set: { caption: "" } });
         resObj.captionRemoved = true;
     }
-
     res.json(resObj);
 });
 
+//GET ALL USERS
 app.get("/api/userlist", async (req, res) => {
     let allUsers = await accountsDB.find({});
     allUsers = allUsers.map((user) => {
@@ -174,7 +178,27 @@ app.get("/api/userlist", async (req, res) => {
     res.json(allUsers);
 });
 
-app.post("/api/photoInfo", async (req, res) => {
+//GET SPECIFIC USER
+app.get("/api/user", async (req, res) => {
+    const resObj = {
+        username: "",
+        email: "",
+    };
+
+    const user = req.headers.authorization;
+    const userID = user.replace("user-id: ", "");
+
+    let userInfo = await accountsDB.find({ _id: userID });
+
+    if (userInfo !== null) {
+        resObj.username = userInfo[0].username;
+        resObj.email = userInfo[0].email;
+    }
+
+    res.json(resObj);
+});
+
+app.post("/api/photo-info", async (req, res) => {
     const userID = req.body.userID;
     const _id = req.body._id;
     const caption = req.body.caption;
