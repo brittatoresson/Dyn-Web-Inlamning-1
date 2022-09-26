@@ -82,7 +82,10 @@ function Header(prop: Start) {
                         <Link to="/profile">Profile</Link>
                     </li>
                     <li>
-                        <Link to="/gallery">Gallery</Link>
+                        <Link to="/gallery">Your Gallery</Link>
+                    </li>
+                    <li>
+                        <Link to="/public-gallery">Public Gallery</Link>
                     </li>
                 </ul>
                 {userLoggedIn ? <p> Logged in as: {user.username}</p> : null}

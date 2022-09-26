@@ -11,25 +11,23 @@ function GalleryPage() {
     const [galleryImages, setGalleryImages] = useState<Array<imageData>>([
         { savedPhoto: "", userID: "", _id: "" },
     ]);
-    const [caption, setCaption] = useState();
     const [imageInfo, setImageInfo] = useState({ username: "", caption: "" });
+    const [caption, setCaption] = useState<string>();
 
     function showInfoDialog(image: imageData) {
         const infoDialog = document.getElementById("info-dialog") as HTMLDialogElement;
         infoDialog.showModal();
+
         setSelectedImage({
+            isPublic: image.isPublic,
+            dateObj: image.dateObj,
+            caption: image.caption,
             savedPhoto: image.savedPhoto,
             userID: image.userID,
             _id: image._id,
-            dateObj: image.dateObj,
-            caption: image.caption,
         });
-    }
 
-    function closeInfoDialog() {
-        const infoDialog = document.getElementById("info-dialog") as HTMLDialogElement;
-
-        infoDialog.close();
+        console.log(selectedImage);
     }
 
     function showDeleteDialog(image: imageData) {
@@ -40,6 +38,12 @@ function GalleryPage() {
             userID: image.userID,
             _id: image._id,
         });
+    }
+
+    function closeInfoDialog() {
+        const infoDialog = document.getElementById("info-dialog") as HTMLDialogElement;
+        infoDialog.close();
+        getGalleryImages();
     }
 
     function closeDeleteDialog() {
@@ -63,7 +67,7 @@ function GalleryPage() {
         setGalleryImages(await data);
     }
 
-    async function removeImage() {
+    async function deleteImage() {
         const sendData = {
             userID: selectedImage.userID,
             imageID: selectedImage._id,
@@ -79,21 +83,40 @@ function GalleryPage() {
         closeDeleteDialog();
     }
 
-    useEffect(() => {
-        getGalleryImages();
-    }, []);
+    async function updateImage(isPublicInput: boolean) {
+        const sendData = {
+            userID: selectedImage.userID,
+            imageID: selectedImage._id,
+            isPublic: isPublicInput,
+        };
 
-    async function getPhotoInfo() {
-        let userID = {
+        const response = await fetch("http://localhost:5555/api/photodb", {
+            method: "PUT",
+            body: JSON.stringify(sendData),
+            headers: { "Content-Type": "application/json" },
+        });
+        const data = await response.json();
+    }
+
+    async function switchPublicState() {
+        const newIsPublic = !selectedImage.isPublic;
+        setSelectedImage({ ...selectedImage, isPublic: newIsPublic });
+
+        await updateImage(newIsPublic);
+    }
+
+    async function sendPhotoInfo() {
+        let image = {
             userID: selectedImage.userID,
             _id: selectedImage._id,
             caption: caption,
         };
         const response = await fetch("http://localhost:5555/api/photoInfo", {
             method: "POST",
-            body: JSON.stringify(userID),
+            body: JSON.stringify(image),
             headers: { "Content-Type": "application/json" },
         });
+
         setImageInfo(await response.json());
     }
 
@@ -102,28 +125,39 @@ function GalleryPage() {
             setCaption(e.target.value);
         }
     }
+
     useEffect(() => {
-        getPhotoInfo();
+        getGalleryImages();
+    }, []);
+
+    useEffect(() => {
+        sendPhotoInfo();
     }, [selectedImage, caption]);
 
     return (
         <main>
-            <h1>Gallery</h1>
+            <h1>Your Gallery</h1>
             <dialog id="delete-dialog">
                 <p>Are you sure you want to delete the photo?</p>
-                <button onClick={() => removeImage()}>confirm</button>
+                <button onClick={() => deleteImage()}>confirm</button>
                 <button onClick={() => closeDeleteDialog()}>cancel</button>
             </dialog>
             <dialog id="info-dialog">
                 <img src={selectedImage.savedPhoto} alt="" />
                 <p>Photo by {imageInfo.username}</p>
-                <p> {selectedImage.caption}</p>
+                <p>{selectedImage.caption}</p>
                 <p>
                     {selectedImage.dateObj?.date}, kl. {selectedImage.dateObj?.time}
                 </p>
                 {!selectedImage.caption ? (
                     <input type="text" placeholder="add caption" onKeyDown={(e) => addCaption(e)} />
                 ) : null}
+                <div className="dialog-share-field">
+                    Share photo:
+                    <button className="share-btn" onClick={() => switchPublicState()}>
+                        {selectedImage.isPublic?.toString()}
+                    </button>
+                </div>
                 <button onClick={() => closeInfoDialog()}>back</button>
             </dialog>
             <article className="gallery-grid">
