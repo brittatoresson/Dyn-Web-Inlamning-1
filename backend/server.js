@@ -150,13 +150,17 @@ app.delete("/api/photodb", async (req, res) => {
     const imageData = req.body;
     const resObj = {
         imageRemoved: false,
+        captionRemoved: false,
     };
 
     let photo = await photosDB.find({ _id: imageData.imageID });
 
-    if (photo.length > 0) {
+    if (photo.length > 0 && imageData.removeCaption !== true) {
         resObj.imageRemoved = true;
         photosDB.remove({ _id: imageData.imageID });
+    } else if (photo.length > 0 && imageData.removeCaption === true) {
+        photosDB.update({ _id: imageData.imageID }, { $set: { caption: "" } });
+        resObj.captionRemoved = true;
     }
 
     res.json(resObj);
@@ -179,6 +183,7 @@ app.post("/api/photoInfo", async (req, res) => {
         username: "",
         caption: caption,
     };
+
     let users = await accountsDB.find({ _id: userID });
     users.map((user) => {
         resObj.username = user.username;

@@ -275,6 +275,20 @@ canvas {
     opacity: 1;
 }
 
+.caption {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.caption p {
+    margin: 0.5em;
+}
+.caption img {
+    width: 1em;
+    height: 1em;
+    cursor: pointer;
+}
+
 .dialog-share-field {
     margin: 1em;
 }
