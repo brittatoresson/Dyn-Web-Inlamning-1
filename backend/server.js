@@ -129,7 +129,6 @@ app.get("/api/photodb", async (req, res) => {
   const user = req.headers.authorization;
   const userID = user.replace("user-id: ", "");
   let userPhotos = await photosDB.find({ userID: userID });
-
   /// ADMIN ACCESS
   const adminUsersArray = await accountsDB.find({ isAdmin: true });
   let findAdminUser = adminUsersArray.find((user) => user._id === userID);
@@ -171,13 +170,23 @@ app.get("/api/userlist", async (req, res) => {
 
 app.post("/api/photoInfo", async (req, res) => {
   const userID = req.body.userID;
+  const _id = req.body._id;
+  const caption = req.body.caption;
+  console.log(caption);
+  console.log(userID);
   const resObj = {
     username: "",
+    caption: caption,
   };
   let users = await accountsDB.find({ _id: userID });
   users.map((user) => {
     resObj.username = user.username;
   });
+
+  caption
+    ? photosDB.update({ _id: _id }, { $set: { caption: caption } })
+    : null;
+
   res.json(resObj);
 });
 

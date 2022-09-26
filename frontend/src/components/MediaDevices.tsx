@@ -5,15 +5,9 @@ function MediaDevices() {
   const [savedPhoto, setSavedPhoto] = useState<any>();
   const [viewPhoto, setViewPhoto] = useState<boolean>(false);
   const [filter, setFilter] = useState("");
-  const filterArray = [
-    "grayscale(100%)",
-    "blur",
-    "low_fi",
-    "sepia",
-    "contrast",
-  ];
+  const filterArray = ["gray", "blur", "low_fi", "sepia", "contrast"];
 
-  let dateTime = {
+  let dateObj = {
     date: "",
     time: "",
   };
@@ -21,11 +15,11 @@ function MediaDevices() {
   function getDateAndTime() {
     let date: any = new Date().toString().slice(0, 16);
     let time: any = new Date().toString().slice(16, 21);
-    dateTime = {
+    dateObj = {
       date,
       time,
     };
-    return dateTime;
+    return dateObj;
   }
 
   function startCamera() {
@@ -61,7 +55,7 @@ function MediaDevices() {
     getDateAndTime();
     let userID: string | undefined | null = localStorage.getItem("user-id");
     userID = userID?.substring(1, userID.length - 1);
-    let photoObj = { savedPhoto, userID, dateTime };
+    let photoObj = { savedPhoto, userID, dateObj };
     const response = await fetch("http://localhost:5555/api/photodb", {
       method: "POST",
       body: JSON.stringify(photoObj),
@@ -87,7 +81,7 @@ function MediaDevices() {
           height="500"
           id="video"
           className={
-            filter === "grayscale(100%)"
+            filter === "gray"
               ? "gray"
               : filter === "blur"
               ? "blur"
@@ -131,7 +125,7 @@ function MediaDevices() {
           }
         >
           <option value=""> </option>
-          <option value="grayscale(100%)"> Grey </option>
+          <option value="gray"> Grey </option>
           <option value="blur"> Blur </option>
           <option value="low_fi"> Low-fi </option>
           <option value="sepia"> Sepia </option>
