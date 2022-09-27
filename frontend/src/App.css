@@ -99,7 +99,7 @@ header {
 }
 
 .main-nav {
-    position: absolute;
+    position: fixed;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -184,7 +184,7 @@ canvas {
 }
 
 .vid-margin {
-    margin: 1em;
+    margin: 1em 1em 0 1em;
 }
 
 /* FRAMES, oklart om detta ska vara med */
