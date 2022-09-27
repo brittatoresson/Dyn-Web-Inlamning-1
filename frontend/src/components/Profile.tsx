@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Account } from "../interface/interface";
 
 function Profile() {
+    let navigate = useNavigate();
+
     const [photosArray, setPhotosArray] = useState<Array<object>>([]);
-    const [userlist, setUserlist] = useState<any>();
+    const [userlist, setUserlist] = useState<Array<Account>>();
     const [user, setUser] = useState({
         userdata: { username: "", email: "", isAdmin: false, photoArray: [] },
     });
-
     const token: string | null = sessionStorage.getItem("token");
-    let navigate = useNavigate();
 
     async function getUserProfile() {
         const response = await fetch("http://localhost:5555/api/loggedin", {
@@ -36,8 +37,7 @@ function Profile() {
             method: "GET",
             headers: { authorization: `user: ${user.userdata.username}` },
         });
-        const data = await response.json();
-        setUserlist(data);
+        setUserlist(await response.json());
     }
 
     useEffect(() => {
@@ -60,7 +60,7 @@ function Profile() {
                         <td>{user.userdata.username}</td>
                     </tr>
                     <tr>
-                        <td>Email: </td>
+                        <td>Email:</td>
                         <td>{user.userdata.email}</td>
                     </tr>
                     <tr>
@@ -82,8 +82,8 @@ function Profile() {
                     </tr>
                 </thead>
                 <tbody>
-                    {userlist?.map((user: any) => (
-                        <tr>
+                    {userlist?.map((user: Account, i: number) => (
+                        <tr key={i}>
                             <td>{user.username}</td>
                             <td>{user.email}</td>
                         </tr>

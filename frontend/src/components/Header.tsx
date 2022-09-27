@@ -9,7 +9,7 @@ function Header(prop: Start) {
     const [user, setUser] = useState({ username: "" });
     const [userLoggedIn, setUserLoggedIn] = useState<boolean>();
     const [toggleNavigation, setToggleNavigation] = useState<boolean>(false);
-    let start = prop.state;
+    const start = prop.state;
 
     async function isLoggedIn() {
         const token: string | null = sessionStorage.getItem("token");
@@ -73,7 +73,7 @@ function Header(prop: Start) {
                     <li onClick={() => start.setStart(false)}>
                         <Link to="/">Start</Link>
                     </li>
-                    {userLoggedIn === false ? (
+                    {!userLoggedIn ? (
                         <li>
                             <Link to="/account">Log In</Link>
                         </li>
@@ -88,8 +88,10 @@ function Header(prop: Start) {
                         <Link to="/public-gallery">Public Gallery</Link>
                     </li>
                 </ul>
-                {userLoggedIn ? <p> Logged in as: {user.username}</p> : null}
-                {userLoggedIn ? <button onClick={() => logout()}>Log out</button> : <span></span>}
+                {userLoggedIn ? (
+                    <span className="username-info-field">Logged in: {user.username}</span>
+                ) : null}
+                {userLoggedIn ? <button onClick={() => logout()}>Log out</button> : null}
             </nav>
         </header>
     );

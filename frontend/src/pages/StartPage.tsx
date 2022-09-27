@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import MediaDevices from "../components/MediaDevices";
-import logo from "../img/169261106-90952bfe-04f0-45c0-bfbe-dd805c6b7cd0.png";
+import logo from "../assets/169261106-90952bfe-04f0-45c0-bfbe-dd805c6b7cd0.png";
 import { Start } from "../interface/interface";
 
 function StartPage(prop: Start) {
-    let start = prop.state;
+    const start = prop.state;
 
     return (
         <main id="start-page">

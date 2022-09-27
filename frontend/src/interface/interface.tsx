@@ -1,8 +1,8 @@
 export interface Account {
     username: string;
-    password: string | number;
+    password?: string | number;
     email: string;
-    isAdmin: boolean;
+    isAdmin?: boolean;
 }
 export interface handleInput {
     target: { value: string; name: string };
@@ -29,4 +29,9 @@ export interface imageData {
     isPublic?: boolean;
     dateObj?: { date: ""; time: "" };
     caption?: "";
+}
+
+export interface caption {
+    username: string;
+    caption: string;
 }

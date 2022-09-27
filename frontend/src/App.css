@@ -99,7 +99,7 @@ header {
 }
 
 .main-nav {
-    position: absolute;
+    position: fixed;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -134,6 +134,13 @@ header {
 .main-nav a:focus {
     color: rgb(255, 147, 147);
     text-decoration: underline;
+}
+
+.username-info-field {
+    margin: 0 auto 1em;
+    padding: 0.5em;
+    background-color: #343637;
+    border-radius: 4px;
 }
 
 .logo {
@@ -177,22 +184,8 @@ canvas {
 }
 
 .vid-margin {
-    margin: 1em;
+    margin: 1em 1em 0 1em;
 }
-
-/* FRAMES, oklart om detta ska vara med */
-/* canvas { */
-/* border: 20px solid transparent;
-  padding: 15px;
-  border-image: url(https://www.gardendesign.com/pictures/images/675x529Max/site_3/helianthus-yellow-flower-pixabay_11863.jpg)
-    30 round; */
-/* padding: 15px; */
-/* border: 30px solid transparent;
-  border-image: url(https://images.all-free-download.com/images/graphiclarge/flower_frame_310303.jpg);
-  border-image-slice: 50;
-  border-image-outset: 0.2;
-  background-color: white; */
-/* } */
 
 /* FILTER */
 .filter {
@@ -279,6 +272,7 @@ canvas {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
 }
 .caption p {
     margin: 0.5em;
@@ -313,6 +307,7 @@ canvas {
 .delete-dialog {
     z-index: 5;
 }
+
 .info-dialog {
     z-index: 5;
 }

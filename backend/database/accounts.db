@@ -1,6 +1,7 @@
-{"username":"marcus","password":"$2a$10$zH5PV2PsyVViTV4QUc7lt.R1sFS8e0HHbnMuFgvx8gnFsacRCM5oG","email":"marcus@email.com","isAdmin":false,"_id":"0Z4vyA3VIly3jr74"}
 {"username":"newadmin","password":"$2a$10$WgVXBMkaVQka2QrzotOFNuiQ/CRsal2PVxAgVakzvfy7nAZWgRDD.","email":"newadmin@edu.edu","isAdmin":true,"_id":"23Rl9P0kdC0iam4N"}
 {"username":"marcus-df","password":"$2a$10$5k3TLal/7MVX1OekCck1lOi9RFasjtjqg2a3tzvvm.W2VBk4DiE7q","email":"marcus@mail.com","isAdmin":true,"_id":"7n7iwF8nwfRO4mcx"}
 {"username":"admin","password":"$2a$10$iBC8u8yYnW52W0Qic/4lwOWJ/h3KeMg/W5KwkryvrCRFlviLawL9y","email":"admin@admin.org","isAdmin":true,"_id":"LJaYdvLUM9xPpDn9"}
 {"username":"hejhej","password":"$2a$10$9.1iOGF0cYGv3tpwwGc5c.ukdbzTMM9M8h17sQvao4nv2oQc5q0DW","email":"hej@hej.com","isAdmin":false,"_id":"P2A5aTsMSrrq6gFV"}
+{"username":"hemma","password":"$2a$10$oKEz/MUMKQrKAllbBuUQquPK11/gXF9DG0o3OxsJPPjNDynri/sW6","email":"hemma@blabla.se","isAdmin":false,"_id":"VIzmcjpe3bh8drtR"}
+{"username":"växt","password":"$2a$10$2VyVztqnhoOEdbV20X1JSOZDrcFcOUZhuOuGyRBTQYMEaWn7GlE.y","email":"vaxt@vaxt.vaxt","isAdmin":false,"_id":"iCYvV2oVW9o07hdT"}
 {"username":"brito","password":"$2a$10$KKP1x26nYYNPn8w.VBAlTO3CIPOF2krNqDWS/iD.uQKeYXgqnD5Va","email":"brito@post.brev","isAdmin":false,"_id":"m1FYwZxJICns1NHa"}
