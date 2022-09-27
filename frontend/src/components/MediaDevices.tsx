@@ -2,10 +2,10 @@ import filterFunction from "./Filter";
 import { useState, useEffect, ChangeEvent } from "react";
 
 function MediaDevices() {
-    const [savedPhoto, setSavedPhoto] = useState<any>();
+    const [savedPhoto, setSavedPhoto] = useState<string>();
     const [viewPhoto, setViewPhoto] = useState<boolean>(false);
-    const [filter, setFilter] = useState("");
-    const filterArray = ["gray", "blur", "low_fi", "sepia", "contrast"];
+    const [filter, setFilter] = useState<string>("");
+    const filterArray: string[] = ["gray", "blur", "low_fi", "sepia", "contrast"];
     const [isPublic] = useState<boolean>(false);
 
     let dateObj = {
@@ -14,8 +14,8 @@ function MediaDevices() {
     };
 
     function getDateAndTime() {
-        let date: any = new Date().toString().slice(0, 16);
-        let time: any = new Date().toString().slice(16, 21);
+        let date: string = new Date().toString().slice(0, 16);
+        let time: string = new Date().toString().slice(16, 21);
         dateObj = {
             date,
             time,
@@ -30,7 +30,7 @@ function MediaDevices() {
             .then((MediaStream) => {
                 //get video element
                 video.srcObject = MediaStream;
-                //set aoutplay to true
+                //set autoplay to true
                 video.autoplay = true;
             })
             .catch((error) => {
@@ -42,12 +42,14 @@ function MediaDevices() {
         const canvas = document.getElementById("canvas") as HTMLCanvasElement;
         const video = document.getElementById("video") as HTMLVideoElement;
         const context: any = canvas.getContext("2d");
+
         if (context) {
             let findFilter: string | undefined = filterArray.find((f) => f == filter);
             filterFunction(findFilter, context);
         }
+
         context?.drawImage(video, 0, 0, 340, 260);
-        const image = canvas.toDataURL("image/jpeg");
+        const image: string = canvas.toDataURL("image/jpeg");
         setSavedPhoto(image);
         setViewPhoto(true);
     }

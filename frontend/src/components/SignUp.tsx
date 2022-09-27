@@ -3,12 +3,7 @@ import { Account } from "../interface/interface";
 import { handleInput } from "../interface/interface";
 
 function SignUp() {
-    const credentials: {
-        username: string;
-        password: string;
-        email: string;
-        isAdmin: boolean;
-    } = {
+    const credentials: Account = {
         username: "",
         password: "",
         email: "",
@@ -21,7 +16,6 @@ function SignUp() {
 
     function handleChange(e: handleInput) {
         setAccount({ ...account, [e.target.name]: e.target.value });
-        console.log(typeof e);
     }
 
     async function createAccount(account: Account) {
@@ -67,7 +61,6 @@ function SignUp() {
                 type="email"
                 placeholder="email"
                 name="email"
-                pattern="/(^$|^.*@.*\..*$)/"
                 value={account?.email}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)}
             />

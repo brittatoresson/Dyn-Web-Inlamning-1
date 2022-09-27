@@ -30,3 +30,8 @@ export interface imageData {
     dateObj?: { date: ""; time: "" };
     caption?: "";
 }
+
+export interface caption {
+    username: string;
+    caption: string;
+}

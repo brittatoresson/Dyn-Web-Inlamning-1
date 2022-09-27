@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import xMark from "../assets/xmark-solid.svg";
-import { imageData } from "../interface/interface";
+import { caption, imageData } from "../interface/interface";
 
 function GalleryPage() {
     const [selectedImage, setSelectedImage] = useState<imageData>({
@@ -11,7 +11,7 @@ function GalleryPage() {
     const [galleryImages, setGalleryImages] = useState<Array<imageData>>([
         { savedPhoto: "", userID: "", _id: "" },
     ]);
-    const [imageInfo, setImageInfo] = useState({ username: "", caption: "" });
+    const [imageInfo, setImageInfo] = useState<caption>();
     const [caption, setCaption] = useState<string>();
 
     function showInfoDialog(image: imageData) {
@@ -26,13 +26,12 @@ function GalleryPage() {
             userID: image.userID,
             _id: image._id,
         });
-
-        console.log(selectedImage);
     }
 
     function showDeleteDialog(image: imageData) {
         const deleteDialog = document.getElementById("delete-dialog") as HTMLDialogElement;
         deleteDialog.showModal();
+
         setSelectedImage({
             savedPhoto: image.savedPhoto,
             userID: image.userID,
@@ -61,14 +60,11 @@ function GalleryPage() {
                 authorization: `user-id: ${userID}`,
             },
         });
-        const data = await response.json();
-        console.log(data);
-
-        setGalleryImages(await data);
+        setGalleryImages(await response.json());
     }
 
-    async function deleteImage(removeCaption: boolean | null) {
-        if (removeCaption === true) {
+    async function deleteContent(removeCaption: boolean | null) {
+        if (removeCaption) {
             setSelectedImage({
                 ...selectedImage,
                 caption: "",
@@ -78,7 +74,6 @@ function GalleryPage() {
         const sendData = {
             userID: selectedImage.userID,
             imageID: selectedImage._id,
-
             removeCaption: removeCaption,
         };
 
@@ -87,7 +82,7 @@ function GalleryPage() {
             body: JSON.stringify(sendData),
             headers: { "Content-Type": "application/json" },
         });
-        const data = await response.json();
+        await response.json();
         getGalleryImages();
         closeDeleteDialog();
         removeCaption = false;
@@ -106,13 +101,12 @@ function GalleryPage() {
             body: JSON.stringify(sendData),
             headers: { "Content-Type": "application/json" },
         });
-        const data = await response.json();
+        await response.json();
     }
 
     async function switchPublicState() {
         const newIsPublic = !selectedImage.isPublic;
         setSelectedImage({ ...selectedImage, isPublic: newIsPublic });
-
         await updateImage(newIsPublic);
     }
 
@@ -122,17 +116,17 @@ function GalleryPage() {
             _id: selectedImage._id,
             caption: caption,
         };
+
         const response = await fetch("http://localhost:5555/api/photo-info", {
             method: "POST",
             body: JSON.stringify(image),
             headers: { "Content-Type": "application/json" },
         });
-
         setImageInfo(await response.json());
     }
 
     function addCaption(e: any) {
-        if (e.keyCode == 13) {
+        if (e.key == "Enter") {
             setCaption(e.target.value);
             setSelectedImage({
                 ...selectedImage,
@@ -156,7 +150,7 @@ function GalleryPage() {
             <h1>Your Gallery</h1>
             <dialog id="delete-dialog">
                 <p>Are you sure you want to delete the photo?</p>
-                <button onClick={() => deleteImage(null)}>confirm</button>
+                <button onClick={() => deleteContent(null)}>confirm</button>
                 <button onClick={() => closeDeleteDialog()}>cancel</button>
             </dialog>
             <dialog id="info-dialog">
@@ -164,11 +158,11 @@ function GalleryPage() {
                 <p>
                     {selectedImage.dateObj?.date}, kl. {selectedImage.dateObj?.time}
                 </p>
-                <p className="photo-by">Photo by {imageInfo.username}</p>
+                <p className="photo-by">Photo by {imageInfo?.username}</p>
                 {selectedImage.caption ? (
                     <div className="caption">
                         <p>Caption: {selectedImage.caption}</p>
-                        <img onClick={() => deleteImage(true)} src={xMark}></img>
+                        <img onClick={() => deleteContent(true)} src={xMark}></img>
                     </div>
                 ) : null}
 

@@ -145,7 +145,6 @@ app.post("/api/photodb", async (req, res) => {
 app.put("/api/photodb", async (req, res) => {
     const imageData = req.body;
 
-    console.log(imageData);
     await photosDB.update({ _id: imageData.imageID }, { $set: { isPublic: imageData.isPublic } });
     res.json("switched");
 });
@@ -199,6 +198,7 @@ app.get("/api/user", async (req, res) => {
     res.json(resObj);
 });
 
+//UPDATE CAPTION ON IMAGE
 app.post("/api/photo-info", async (req, res) => {
     const userID = req.body.userID;
     const _id = req.body._id;

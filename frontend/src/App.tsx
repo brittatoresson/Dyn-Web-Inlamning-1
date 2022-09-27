@@ -9,7 +9,7 @@ import PublicGalleryPage from "./pages/PublicGalleryPage";
 import StartPage from "./pages/StartPage";
 
 function App() {
-    const [start, setStart] = useState(false);
+    const [start, setStart] = useState<boolean>(false);
 
     useEffect(() => {
         setStart(false);

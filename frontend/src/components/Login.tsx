@@ -21,17 +21,15 @@ function Login() {
         });
         const data: { success: boolean; token: string } = await response.json();
         setIsLogin(data.success);
-        console.log(isLogin);
 
         if (data.success) {
             sessionStorage.setItem("token", data.token);
             navigate("/profile");
         }
-        console.log(data);
     }
 
     return (
-        <form className="login-form" onSubmit={(e: any) => login(e)}>
+        <form className="login-form" onSubmit={(e: FormEvent) => login(e)}>
             <div className={isLogin === false ? "error-msg" : "toggle-visibility"}>
                 Username or password is incorrect, please try again
             </div>

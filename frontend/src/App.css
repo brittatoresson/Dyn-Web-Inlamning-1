@@ -187,20 +187,6 @@ canvas {
     margin: 1em 1em 0 1em;
 }
 
-/* FRAMES, oklart om detta ska vara med */
-/* canvas { */
-/* border: 20px solid transparent;
-  padding: 15px;
-  border-image: url(https://www.gardendesign.com/pictures/images/675x529Max/site_3/helianthus-yellow-flower-pixabay_11863.jpg)
-    30 round; */
-/* padding: 15px; */
-/* border: 30px solid transparent;
-  border-image: url(https://images.all-free-download.com/images/graphiclarge/flower_frame_310303.jpg);
-  border-image-slice: 50;
-  border-image-outset: 0.2;
-  background-color: white; */
-/* } */
-
 /* FILTER */
 .filter {
     display: flex;
