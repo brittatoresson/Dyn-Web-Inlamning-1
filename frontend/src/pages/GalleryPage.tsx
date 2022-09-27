@@ -150,14 +150,6 @@ function GalleryPage() {
     }
   }
 
-  // useEffect(() => {
-  //   getGalleryImages();
-  // }, []);
-
-  // useEffect(() => {
-  //   sendPhotoInfo();
-  // }, [selectedImage, caption]);
-
   useEffect(() => {
     getGalleryImages();
   }, []);
