@@ -136,6 +136,13 @@ header {
     text-decoration: underline;
 }
 
+.username-info-field {
+    margin: 0 auto 1em;
+    padding: 0.5em;
+    background-color: #343637;
+    border-radius: 4px;
+}
+
 .logo {
     display: flex;
     align-items: center;
@@ -279,6 +286,7 @@ canvas {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
 }
 .caption p {
     margin: 0.5em;
@@ -313,6 +321,7 @@ canvas {
 .delete-dialog {
     z-index: 5;
 }
+
 .info-dialog {
     z-index: 5;
 }

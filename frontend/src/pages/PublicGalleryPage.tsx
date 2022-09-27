@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { imageData } from "../interface/interface";
+import { Account, imageData } from "../interface/interface";
 
 function PublicGalleryPage() {
   const [selectedImage, setSelectedImage] = useState<imageData>({
@@ -7,6 +7,7 @@ function PublicGalleryPage() {
     userID: "",
     _id: "",
   });
+  const [selectedImgUser, setSelectedImgUser] = useState<Account>();
   const [galleryImages, setGalleryImages] = useState<Array<imageData>>([
     { savedPhoto: "", userID: "", _id: "" },
   ]);
@@ -26,7 +27,18 @@ function PublicGalleryPage() {
       _id: image._id,
     });
 
-    console.log(selectedImage);
+    getImgUsername(image.userID);
+  }
+
+  async function getImgUsername(userID: string) {
+    const response = await fetch("http://localhost:5555/api/user", {
+      method: "GET",
+      headers: {
+        authorization: `user-id: ${userID}`,
+      },
+    });
+    const data = await response.json();
+    setSelectedImgUser(await data);
   }
 
   function closeInfoDialog() {
@@ -53,7 +65,7 @@ function PublicGalleryPage() {
       <h1>Public Gallery</h1>
       <dialog id="info-dialog">
         <img src={selectedImage.savedPhoto} alt="" />
-        <p>Photo by {selectedImage.userID}</p>
+        <p>Photo by {selectedImgUser?.username}</p>
         <p>{selectedImage.caption}</p>
         <p>
           {selectedImage.dateObj?.date}, kl. {selectedImage.dateObj?.time}

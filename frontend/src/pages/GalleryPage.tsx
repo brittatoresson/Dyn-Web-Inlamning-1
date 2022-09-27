@@ -130,7 +130,7 @@ function GalleryPage() {
       _id: selectedImage._id,
       caption: caption,
     };
-    const response = await fetch("http://localhost:5555/api/photoInfo", {
+    const response = await fetch("http://localhost:5555/api/photo-info", {
       method: "POST",
       body: JSON.stringify(image),
       headers: { "Content-Type": "application/json" },
@@ -149,6 +149,14 @@ function GalleryPage() {
       sendPhotoInfo();
     }
   }
+
+  // useEffect(() => {
+  //   getGalleryImages();
+  // }, []);
+
+  // useEffect(() => {
+  //   sendPhotoInfo();
+  // }, [selectedImage, caption]);
 
   useEffect(() => {
     getGalleryImages();
