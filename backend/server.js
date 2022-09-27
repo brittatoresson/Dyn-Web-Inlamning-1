@@ -141,6 +141,7 @@ app.post("/api/photodb", async (req, res) => {
     }
 });
 
+//CHANGE IMAGE OBJECT STATE
 app.put("/api/photodb", async (req, res) => {
     const imageData = req.body;
 
